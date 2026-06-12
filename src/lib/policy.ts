@@ -88,10 +88,10 @@ export function enforceSpendLimits(
 }
 
 export const DEFAULT_POLICY = {
-  dailyLimitCents: 100,
-  monthlyLimitCents: 1000,
-  perPurchaseLimitCents: 50,
+  dailyLimitCents: 500000,
+  monthlyLimitCents: 10000000,
+  perPurchaseLimitCents: 100000,
   allowedCategoriesJson: "[]",
   blockedSkusJson: "[]",
-  requireHumanApprovalOverCents: 100,
+  requireHumanApprovalOverCents: 100000,
 } as const;

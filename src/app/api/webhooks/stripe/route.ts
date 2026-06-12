@@ -1,17 +1,14 @@
 import { NextResponse } from "next/server";
-import { Prisma } from "@prisma/client";
 import type Stripe from "stripe";
 import { prisma } from "@/lib/db";
 import { getStripe } from "@/lib/stripe";
-import { appendLedgerEntry, getWalletForOrg, writeAuditLog } from "@/lib/credits";
+import { reconcilePaidCheckoutSession } from "@/lib/stripe-checkout-reconciliation";
 
 /**
- * Stripe webhook — the ONLY code path that credits a wallet.
- *
- * Idempotency: StripeEvent.stripeEventId is unique and is inserted in the
- * same serializable transaction as the ledger credit, so an event is either
- * fully processed once or not at all. Replays hit the unique constraint and
- * return 200 without crediting again.
+ * Stripe webhook entrypoint. Wallet credits are written only after a server-side
+ * Stripe session says payment_status=paid, and the shared reconciler keys
+ * idempotency to the Checkout Session id so webhook/manual sync cannot double
+ * credit the same payment.
  */
 export async function POST(request: Request) {
   const rawBody = await request.text();
@@ -33,81 +30,38 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid signature." }, { status: 400 });
   }
 
-  if (event.type !== "checkout.session.completed") {
+  if (event.type === "checkout.session.expired") {
+    const session = event.data.object;
+    await prisma.checkoutIntent
+      .updateMany({
+        where: { stripeSessionId: session.id, status: "open" },
+        data: { status: "expired" },
+      })
+      .catch((e) => console.error("[webhook] checkout expiration update failed:", e));
+    return NextResponse.json({ received: true, expired: session.id });
+  }
+
+  if (
+    event.type !== "checkout.session.completed" &&
+    event.type !== "checkout.session.async_payment_succeeded"
+  ) {
     return NextResponse.json({ received: true, ignored: event.type });
   }
 
-  const session = event.data.object;
-  if (session.payment_status !== "paid") {
-    // Async payment methods complete later via checkout.session.async_payment_succeeded;
-    // out of scope for card-only bundles.
-    return NextResponse.json({ received: true, ignored: "payment_status != paid" });
-  }
-
-  const organizationId = session.metadata?.organization_id;
-  const creditsCents = Number.parseInt(session.metadata?.credits_cents ?? "", 10);
-
-  // Permanent failures return 200: a 4xx/5xx would make Stripe retry an
-  // event that can never succeed.
-  if (!organizationId || !Number.isInteger(creditsCents) || creditsCents <= 0) {
-    console.error("[webhook] missing/invalid metadata on session", session.id);
-    return NextResponse.json({ received: true, ignored: "invalid metadata" });
-  }
-
-  const wallet = await getWalletForOrg(organizationId);
-  if (!wallet) {
-    console.error("[webhook] no wallet for organization", organizationId);
-    return NextResponse.json({ received: true, ignored: "unknown organization" });
-  }
-
+  const session = event.data.object as Stripe.Checkout.Session;
   try {
-    await prisma.$transaction(
-      async (tx) => {
-        await tx.stripeEvent.create({
-          data: {
-            stripeEventId: event.id,
-            type: event.type,
-            rawJson: rawBody,
-          },
-        });
-
-        await appendLedgerEntry(
-          {
-            walletId: wallet.id,
-            organizationId,
-            type: "credit",
-            amountCents: creditsCents,
-            source: "stripe_checkout",
-            externalRef: session.id,
-            idempotencyKey: `stripe:${event.id}`,
-          },
-          tx,
-        );
-
-        await writeAuditLog(
-          {
-            organizationId,
-            actorType: "system",
-            action: "wallet.credited",
-            metadata: {
-              stripe_event_id: event.id,
-              checkout_session_id: session.id,
-              bundle: session.metadata?.bundle,
-              credits_cents: creditsCents,
-            },
-          },
-          tx,
-        );
+    const result = await reconcilePaidCheckoutSession({
+      session,
+      stripeEvent: {
+        id: event.id,
+        type: event.type,
+        rawJson: rawBody,
       },
-      { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
-    );
+      source: "stripe_webhook",
+    });
+    return NextResponse.json({ received: true, reconciliation: result });
   } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2002") {
-      return NextResponse.json({ received: true, deduped: true });
-    }
     console.error("[webhook] processing failed, Stripe will retry:", e);
     return NextResponse.json({ error: "Processing failed." }, { status: 500 });
   }
-
-  return NextResponse.json({ received: true });
 }

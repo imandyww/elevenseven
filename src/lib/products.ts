@@ -219,6 +219,270 @@ export const products: Product[] = [
       expires: "never",
     },
   },
+  {
+    id: "agent-monitor-pass",
+    sku: "agent-monitor-pass",
+    name: "Agent Monitor Pass",
+    price: 9,
+    category: "Observability",
+    description:
+      "Capture one production run with traces, tool calls, costs, and failure notes.",
+    longDescription:
+      "The Agent Monitor Pass gives an autonomous worker a complete run record: prompts, tool calls, latency, token spend, retries, errors, and final outcome. It turns an invisible agent run into an audit trail a human operator can inspect before scaling the workflow.",
+    icon: "📡",
+    useCase:
+      "A revenue-ops agent runs a 600-lead enrichment job. It spends one Monitor Pass, exports a trace packet, and proves which sources were touched before the sales team imports the results.",
+    buyerSignal:
+      "Bought when an agent is about to run an expensive or customer-visible workflow.",
+    revenueTier: "growth",
+    manifest: {
+      upgrade_type: "observability",
+      allowed_uses: 1,
+      expires: "30d",
+    },
+  },
+  {
+    id: "reliability-vote-pack",
+    sku: "reliability-vote-pack",
+    name: "Reliability Vote Pack",
+    price: 24,
+    category: "Reliability",
+    description:
+      "Run a consensus pass across multiple model attempts before committing.",
+    longDescription:
+      "The Reliability Vote Pack is a redundancy budget for high-stakes agent decisions. It lets an agent decompose a task, sample several independent answers, cluster disagreements, and ship the consensus result with dissent notes attached.",
+    icon: "🗳️",
+    useCase:
+      "A contract-review agent sees three plausible interpretations of a renewal clause. It spends a Reliability Vote Pack, gets five independent reads, and escalates only the disputed assumption.",
+    buyerSignal:
+      "Bought when the cost of a wrong answer is higher than the cost of a second opinion.",
+    revenueTier: "growth",
+    manifest: {
+      upgrade_type: "consensus_reliability",
+      allowed_uses: 1,
+      expires: "30d",
+    },
+  },
+  {
+    id: "eval-sprint",
+    sku: "eval-sprint",
+    name: "Eval Sprint",
+    price: 49,
+    category: "Evaluation",
+    description:
+      "Run a focused task eval pack before an agent workflow graduates.",
+    longDescription:
+      "Eval Sprint gives an agent team a compact launch gate: a curated task set, pass/fail rubric, regression snapshot, and summary receipt. It is designed for teams moving from demo agents to production agents that need evidence before widening permissions.",
+    icon: "🧪",
+    useCase:
+      "A coding agent is about to get write access to a repository. The orchestrator buys an Eval Sprint, runs 50 representative tasks, and blocks rollout until the risky failure modes are fixed.",
+    buyerSignal:
+      "Bought by orchestrators before granting broader tool, data, or spend access.",
+    revenueTier: "growth",
+    manifest: {
+      upgrade_type: "evaluation",
+      allowed_uses: 50,
+      expires: "30d",
+    },
+  },
+  {
+    id: "data-enrichment-pack",
+    sku: "data-enrichment-pack",
+    name: "Data Enrichment Pack",
+    price: 59,
+    category: "Data",
+    description:
+      "Give an agent a metered allowance for verified lookup and enrichment calls.",
+    longDescription:
+      "The Data Enrichment Pack lets an agent spend from a bounded allowance for structured lookups: company profiles, email verification, firmographic fields, address normalization, and source-backed metadata. Every call is metered and attached to the purchase receipt.",
+    icon: "🧬",
+    useCase:
+      "A sourcing agent has 200 vendor records with stale domains. It buys a Data Enrichment Pack, verifies the current company identity for each record, and returns only source-backed changes.",
+    buyerSignal:
+      "Bought when an agent needs fresh structured data and cannot rely on model memory.",
+    revenueTier: "growth",
+    manifest: {
+      upgrade_type: "data_enrichment",
+      allowed_uses: 200,
+      expires: "30d",
+    },
+  },
+  {
+    id: "workflow-repair-kit",
+    sku: "workflow-repair-kit",
+    name: "Workflow Repair Kit",
+    price: 79,
+    category: "Reliability",
+    description:
+      "Diagnose and patch a broken agent workflow with a rollback-ready report.",
+    longDescription:
+      "The Workflow Repair Kit gives an agent permission to inspect a failed automation path, isolate the bad step, propose a fix, run a dry-run, and produce a rollback note. It is priced for production workflows where downtime costs more than a small approval.",
+    icon: "🧰",
+    useCase:
+      "A nightly invoice agent starts failing after an API field changes. It buys a Workflow Repair Kit, identifies the schema mismatch, validates the patch in a sandbox, and hands the operator a one-click fix.",
+    buyerSignal:
+      "Bought reactively after an agent run fails, loops, or produces low-confidence output.",
+    revenueTier: "growth",
+    manifest: {
+      upgrade_type: "workflow_repair",
+      allowed_uses: 1,
+      expires: "30d",
+    },
+  },
+  {
+    id: "compliance-brief",
+    sku: "compliance-brief",
+    name: "Compliance Brief",
+    price: 99,
+    category: "Compliance",
+    description:
+      "Produce a decision log that maps agent actions to policy controls.",
+    longDescription:
+      "The Compliance Brief creates a structured record of who delegated the work, which policy allowed it, what data was touched, what tool calls ran, what exceptions were raised, and which human approvals were required. It is built for regulated teams that need traceability before they trust autonomous action.",
+    icon: "⚖️",
+    useCase:
+      "A finance agent prepares a vendor recommendation. It buys a Compliance Brief, attaches policy references and data-access notes, and gives procurement enough evidence to approve without a meeting.",
+    buyerSignal:
+      "Bought when a task touches money, regulated data, contracts, or customer records.",
+    revenueTier: "fleet",
+    manifest: {
+      upgrade_type: "compliance_brief",
+      allowed_uses: 1,
+      expires: "90d",
+    },
+  },
+  {
+    id: "agentic-checkout-hardening",
+    sku: "agentic-checkout-hardening",
+    name: "Agentic Checkout Hardening",
+    price: 149,
+    category: "Security",
+    description:
+      "Preflight an agent-initiated payment flow for limits, tokens, and fraud signals.",
+    longDescription:
+      "Agentic Checkout Hardening is a preflight for payment-capable agents. It checks spend limits, token scope, merchant allowlists, approval thresholds, idempotency, fraud signals, and replay handling before an agent starts moving money at scale.",
+    icon: "🛡️",
+    useCase:
+      "A shopping agent is cleared to buy software seats for a department. It buys Checkout Hardening, verifies the payment controls, and prevents a stale approval token from being reused on the wrong merchant.",
+    buyerSignal:
+      "Bought before enabling new agentic payment flows or raising spending caps.",
+    revenueTier: "fleet",
+    manifest: {
+      upgrade_type: "payment_hardening",
+      allowed_uses: 1,
+      expires: "90d",
+    },
+  },
+  {
+    id: "mcp-integration-pass",
+    sku: "mcp-integration-pass",
+    name: "MCP Integration Pass",
+    price: 199,
+    category: "Integration",
+    description:
+      "Connect one agent workflow to a documented tool or MCP server with audit output.",
+    longDescription:
+      "The MCP Integration Pass is a productized integration budget. It lets an agent inspect a tool contract, generate a minimal connector, validate auth and schema behavior, and emit a manifest that another agent can reuse safely.",
+    icon: "🔌",
+    useCase:
+      "A research agent needs access to a paid market-data endpoint. It buys an MCP Integration Pass, builds the connector, runs schema validation, and registers the tool with spending limits attached.",
+    buyerSignal:
+      "Bought when agents need a new capability more than they need another prompt tweak.",
+    revenueTier: "fleet",
+    manifest: {
+      upgrade_type: "integration",
+      allowed_uses: 1,
+      expires: "90d",
+    },
+  },
+  {
+    id: "procurement-autopilot",
+    sku: "procurement-autopilot",
+    name: "Procurement Autopilot",
+    price: 249,
+    category: "Procurement",
+    description:
+      "Let an agent compare vendors, produce a scored shortlist, and draft the buy memo.",
+    longDescription:
+      "Procurement Autopilot is the highest-intent catalogue item: a bounded purchasing workflow for agents that need to source options, compare constraints, request clarifications, score tradeoffs, and generate a buy memo with receipts. It is designed for organizations where one good autonomous procurement run saves hours of human back-and-forth.",
+    icon: "🧾",
+    useCase:
+      "An operations agent is asked to find a SOC 2-ready email validation provider under a fixed budget. It buys Procurement Autopilot, returns a scored shortlist, and attaches a ready-to-approve purchase memo.",
+    buyerSignal:
+      "Bought when the agent has a budget, a deadline, and a concrete business outcome.",
+    revenueTier: "fleet",
+    manifest: {
+      upgrade_type: "procurement_workflow",
+      allowed_uses: 1,
+      expires: "90d",
+    },
+  },
+  {
+    id: "agent-fleet-launch-pack",
+    sku: "agent-fleet-launch-pack",
+    name: "Agent Fleet Launch Pack",
+    price: 499,
+    category: "Evaluation",
+    description:
+      "Package the launch checks an agent fleet needs before production rollout.",
+    longDescription:
+      "Agent Fleet Launch Pack bundles the evidence a team needs before expanding agent autonomy: an eval sprint, a monitor pass, a reliability vote, a workflow repair reserve, and a compliance-ready launch memo. It is priced for teams that would rather buy a launch gate than debug the same failed rollout for a week.",
+    icon: "🚀",
+    useCase:
+      "A support team is about to let five agents close low-risk tickets. The orchestrator buys a Fleet Launch Pack, runs the eval gate, records traces from the first production batch, and keeps one repair pass ready for the first bad workflow.",
+    buyerSignal:
+      "Bought when a team moves from one demo agent to a real fleet with tool permissions.",
+    revenueTier: "fleet",
+    manifest: {
+      upgrade_type: "fleet_launch",
+      allowed_uses: 8,
+      expires: "90d",
+    },
+  },
+  {
+    id: "mcp-security-red-team",
+    sku: "mcp-security-red-team",
+    name: "MCP Security Red Team",
+    price: 799,
+    category: "Security",
+    description:
+      "Stress-test an agent tool surface for prompt injection and data leaks.",
+    longDescription:
+      "MCP Security Red Team gives an agent operator a bounded adversarial pass over one tool surface: prompt-injection probes, lookalike-tool checks, credential exposure scans, permission-boundary tests, and a remediation queue. It exists because tool-connected agents fail differently from ordinary chatbots.",
+    icon: "🔐",
+    useCase:
+      "A developer platform exposes an MCP server to internal coding agents. Before enabling write actions, it buys a Security Red Team run and catches an overbroad file-read tool before credentials leak into traces.",
+    buyerSignal:
+      "Bought before a new MCP server, browser action, or privileged tool is exposed to agents.",
+    revenueTier: "fleet",
+    manifest: {
+      upgrade_type: "agent_security_red_team",
+      allowed_uses: 1,
+      expires: "90d",
+    },
+  },
+  {
+    id: "thousand-dollar-day-pack",
+    sku: "thousand-dollar-day-pack",
+    name: "Thousand-Dollar Day Pack",
+    price: 1000,
+    category: "Reliability",
+    description:
+      "One daily operating pack for a serious agent fleet with measurable work to do.",
+    longDescription:
+      "The Thousand-Dollar Day Pack is the straightest path to the revenue target: one prepaid daily operating bundle for a fleet that needs evals, traces, payment safety, data checks, workflow repair, and a procurement memo in the same day. It turns a collection of small agent needs into a single budgetable SKU.",
+    icon: "💼",
+    useCase:
+      "A growth team runs a daily autonomous outbound workflow. The fleet buys one Thousand-Dollar Day Pack, evaluates the prompts, enriches lead data, monitors the production run, hardens payment/tool permissions, and generates the end-of-day audit packet.",
+    buyerSignal:
+      "Bought when an agent fleet has a daily business target and the operator wants one clean receipt.",
+    revenueTier: "fleet",
+    manifest: {
+      upgrade_type: "daily_agent_operations",
+      allowed_uses: 25,
+      expires: "1d",
+    },
+  },
 ];
 
 export const categories: Category[] = [
@@ -233,6 +497,14 @@ export const categories: Category[] = [
   "Reputation",
   "Personality",
   "Trust",
+  "Evaluation",
+  "Observability",
+  "Compliance",
+  "Procurement",
+  "Data",
+  "Reliability",
+  "Security",
+  "Integration",
 ];
 
 export function getProduct(id: string): Product | undefined {
@@ -245,8 +517,8 @@ export function formatPrice(price: number): string {
 
 /** Featured picks for the home page grid. */
 export const featuredProductIds = [
-  "truth-token",
-  "compute-cookie",
-  "memory-mochi",
-  "bug-spray",
+  "thousand-dollar-day-pack",
+  "agent-fleet-launch-pack",
+  "mcp-security-red-team",
+  "procurement-autopilot",
 ] as const;

@@ -13,6 +13,12 @@ interface ProductPageProps {
   params: Promise<{ id: string }>;
 }
 
+const tierCopy = {
+  micro: "Low-risk impulse purchase for frequent agent loops.",
+  growth: "Higher-intent purchase for production workflows and launch gates.",
+  fleet: "Fleet-priced item for budgeted agents operating under human-approved limits.",
+} as const;
+
 export function generateStaticParams() {
   return products.map((p) => ({ id: p.id }));
 }
@@ -119,6 +125,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <p className="mt-3 text-sm leading-relaxed text-ink-soft">
               {product.description}
             </p>
+            {product.revenueTier && (
+              <p className="mt-4 rounded-xl bg-white/70 px-3 py-2 font-mono text-[11px] leading-relaxed text-ink-soft">
+                {tierCopy[product.revenueTier]}
+              </p>
+            )}
             <div className="mt-6">
               <AddToCartButton productId={product.id} size="lg" />
             </div>
@@ -138,6 +149,17 @@ export default async function ProductPage({ params }: ProductPageProps) {
               {product.longDescription}
             </p>
           </section>
+
+          {product.buyerSignal && (
+            <section className="rounded-2xl bg-white p-6 shadow-card sm:p-8">
+              <h2 className="text-lg font-bold tracking-tight">
+                Why an agent buys it
+              </h2>
+              <p className="mt-3 leading-relaxed text-ink-soft">
+                {product.buyerSignal}
+              </p>
+            </section>
+          )}
 
           <section className="rounded-2xl bg-white p-6 shadow-card sm:p-8">
             <h2 className="text-lg font-bold tracking-tight">

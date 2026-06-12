@@ -5,7 +5,9 @@ import { usePathname } from "next/navigation";
 import { useCart } from "./cart-context";
 
 const navLinks = [
+  { href: "/start", label: "Start" },
   { href: "/shop", label: "Shop" },
+  { href: "/pilot", label: "Pilot" },
   { href: "/about", label: "About" },
   { href: "/docs", label: "Agent API" },
   { href: "/dashboard/billing", label: "Billing" },
@@ -27,7 +29,7 @@ export function Header() {
               Eleven Seven
             </span>
             <span className="hidden font-mono text-[10px] text-ink-soft sm:block">
-              ~/upgrades --under-a-dollar
+              ~/agent-catalog --paid-pilots
             </span>
           </span>
         </Link>

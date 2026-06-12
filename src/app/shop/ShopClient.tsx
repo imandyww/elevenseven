@@ -48,7 +48,7 @@ export function ShopClient() {
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search upgrades… (try “memory” or “debug”)"
+            placeholder={'Search upgrades... (try "eval", "security", or "procurement")'}
             className="w-full rounded-2xl bg-white py-3 pl-10 pr-4 text-sm shadow-card outline-none ring-blue/40 transition-shadow placeholder:text-ink-soft/60 focus:ring-2"
           />
         </label>

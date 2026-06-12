@@ -12,6 +12,14 @@ const categoryStyles: Record<Category, string> = {
   Reputation: "bg-blue-soft text-blue",
   Personality: "bg-lavender-soft text-violet-600",
   Trust: "bg-mint-soft text-emerald-600",
+  Evaluation: "bg-lavender-soft text-violet-600",
+  Observability: "bg-blue-soft text-blue",
+  Compliance: "bg-coffee-soft text-coffee",
+  Procurement: "bg-mint-soft text-emerald-600",
+  Data: "bg-blue-soft text-blue",
+  Reliability: "bg-lavender-soft text-violet-600",
+  Security: "bg-coffee-soft text-coffee",
+  Integration: "bg-mint-soft text-emerald-600",
 };
 
 export function CategoryBadge({ category }: { category: Category }) {

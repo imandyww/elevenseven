@@ -3,32 +3,13 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { bundles } from "@/lib/bundles";
+import { formatCents } from "@/lib/money";
 import type { WireOrder } from "@/lib/types";
 import { fromWireOrder } from "@/lib/orders";
 import { setLastOrder } from "@/lib/order-store";
 import { formatPrice, getProduct } from "@/lib/products";
 import { useCart } from "@/components/cart-context";
-
-const creditBundles = [
-  {
-    name: "Starter Wallet",
-    price: 5,
-    icon: "🧃",
-    blurb: "About 20 upgrades. Perfect for a single agent's first week.",
-  },
-  {
-    name: "Debug Pack",
-    price: 10,
-    icon: "🍫",
-    blurb: "Bug Spray, Sandbox Snacks, and Truth Tokens in bulk.",
-  },
-  {
-    name: "Workflow Bundle",
-    price: 25,
-    icon: "🛍️",
-    blurb: "Fleet-sized credits for teams of autonomous shoppers.",
-  },
-];
 
 export default function CartPage() {
   const router = useRouter();
@@ -92,11 +73,28 @@ export default function CartPage() {
     );
   }
 
+  const cartLines = items
+    .map((item) => {
+      const product = getProduct(item.productId);
+      return product
+        ? `${item.quantity}x ${product.name} (${product.sku})`
+        : `${item.quantity}x ${item.productId}`;
+    })
+    .join(", ");
+  const fundingWorkflow = `Production agent cart requested ${cartLines}. Fund the buyer wallet first, then let the agent buy these catalog items from prepaid credits. Cart subtotal is ${formatPrice(subtotal)}; recommended initial wallet funding is $1000.00.`;
+  const fundingQuery = new URLSearchParams({
+    agent: "cart-buyer-agent",
+    workflow: fundingWorkflow,
+  }).toString();
+  const fundingHref = `/buy/thousand_day_wallet?${fundingQuery}`;
+  const startHref = `/start?${fundingQuery}`;
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
       <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Cart</h1>
       <p className="mt-2 text-ink-soft">
-        Your agent&apos;s tiny cart of self-improvement.
+        Human-facing cart for browsing. Production agents buy through prepaid
+        credits and the authenticated API.
       </p>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-3">
@@ -174,7 +172,7 @@ export default function CartPage() {
                 <dd className="font-mono">{formatPrice(subtotal)}</dd>
               </div>
               <div className="flex justify-between text-ink-soft">
-                <dt>Microtransaction fees</dt>
+                <dt>Card fees</dt>
                 <dd className="font-mono text-emerald-600">$0.00 (simulated)</dd>
               </div>
               <div className="flex justify-between border-t border-cream-dark pt-3 text-base font-bold">
@@ -187,17 +185,29 @@ export default function CartPage() {
                 {error}
               </p>
             )}
+            <Link
+              href={fundingHref}
+              className="tactile mt-5 block w-full rounded-2xl bg-ink px-6 py-3.5 text-center font-semibold text-cream shadow-card hover:bg-blue hover:text-white"
+            >
+              Fund production wallet
+            </Link>
+            <Link
+              href={startHref}
+              className="mt-3 block rounded-xl bg-white px-4 py-2.5 text-center font-mono text-xs font-semibold text-ink shadow-card hover:bg-cream-dark"
+            >
+              create buyer workspace
+            </Link>
             <button
               type="button"
               onClick={handleCheckout}
               disabled={checkingOut}
-              className="tactile mt-5 w-full rounded-2xl bg-blue px-6 py-3.5 font-semibold text-white shadow-card hover:bg-ink disabled:cursor-not-allowed disabled:opacity-60"
+              className="tactile mt-3 w-full rounded-xl bg-cream px-4 py-2.5 font-mono text-xs font-semibold text-ink-soft hover:bg-cream-dark disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {checkingOut ? "Upgrading your agent…" : "Checkout (simulated)"}
+              {checkingOut ? "Creating demo order..." : "Run demo checkout"}
             </button>
             <p className="mt-4 rounded-xl bg-coffee-soft p-3 font-mono text-[11px] leading-relaxed text-coffee">
-              💡 Real payments would use prepaid Agent Credits or bundles to
-              avoid microtransaction fees.
+              Demo checkout never books revenue. Production agents spend
+              prepaid Agent Credits from a human-funded wallet.
             </p>
           </div>
 
@@ -205,19 +215,19 @@ export default function CartPage() {
           <div className="rounded-2xl bg-white p-6 shadow-card">
             <h2 className="font-bold">Agent Credits</h2>
             <p className="mt-1 text-xs text-ink-soft">
-              Prepaid wallets so agents can shop without swiping a card twelve
-              times.{" "}
+              Prepaid wallets keep humans in control while agents buy
+              evaluation, safety, and workflow packs.{" "}
               <Link
-                href="/dashboard/billing"
+                href={fundingHref}
                 className="font-semibold text-blue underline-offset-4 hover:underline"
               >
-                Buy credits →
+                Fund the $1k wallet →
               </Link>
             </p>
             <ul className="mt-4 space-y-3">
-              {creditBundles.map((bundle) => (
+              {bundles.map((bundle) => (
                 <li
-                  key={bundle.name}
+                  key={bundle.id}
                   className="flex items-start gap-3 rounded-xl bg-cream p-3"
                 >
                   <span className="text-xl" aria-hidden>
@@ -227,7 +237,7 @@ export default function CartPage() {
                     <span className="flex items-baseline justify-between gap-2">
                       <span className="text-sm font-bold">{bundle.name}</span>
                       <span className="font-mono text-sm font-bold text-coffee">
-                        ${bundle.price}
+                        {formatCents(bundle.priceCents)}
                       </span>
                     </span>
                     <span className="block text-xs text-ink-soft">

@@ -14,7 +14,7 @@ import {
 export async function GET(request: Request) {
   try {
     const agent = await authenticateAgent(request);
-    enforceRateLimit(agent.keyHash);
+    await enforceRateLimit(agent.keyHash);
 
     const wallet = await getWalletForOrg(agent.organizationId);
     const [balance, spentToday, spentMonth] = await Promise.all([

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { cartWalletHandoff } from "@/lib/cart-wallet-handoff";
 import {
   CartValidationError,
   createFakeOrder,
@@ -11,9 +12,8 @@ import {
  * Simulated checkout — no real payment is processed.
  * Body: { agent_id?: string, items: [{ productId | sku, quantity }] }
  *
- * Stripe integration note: when real payments land, this handler should
- * create a Stripe PaymentIntent (or draw down a prepaid Agent Credits
- * balance) before constructing the order. See README.md.
+ * Production agents should use the wallet-funding handoff in this response,
+ * then buy through /v1/purchases after Stripe reconciliation credits the wallet.
  */
 export async function POST(request: Request) {
   let body: unknown;
@@ -35,7 +35,18 @@ export async function POST(request: Request) {
   try {
     const cart = validateCart(payload?.items ?? body);
     const order = createFakeOrder(cart, agentId);
-    return NextResponse.json(toWireOrder(order), { status: 201 });
+    return NextResponse.json(
+      {
+        ...toWireOrder(order),
+        payment_mode: "simulated",
+        revenue_booked_cents: 0,
+        recommended_next_action: "fund_wallet",
+        warning:
+          "This legacy checkout is simulated and never books Stripe revenue or wallet credits.",
+        wallet_funding: cartWalletHandoff(cart),
+      },
+      { status: 201 },
+    );
   } catch (e) {
     if (e instanceof CartValidationError) {
       return NextResponse.json(

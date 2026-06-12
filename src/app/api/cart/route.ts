@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { cartWalletHandoff } from "@/lib/cart-wallet-handoff";
 import { CartValidationError, validateCart } from "@/lib/orders";
 
 /**
@@ -22,8 +23,12 @@ export async function POST(request: Request) {
     return NextResponse.json({
       items: cart.orderItems,
       subtotal: cart.total,
+      subtotal_cents: Math.round(cart.total * 100),
       currency: "USD",
-      note: "Cart priced successfully. POST /api/checkout to complete the purchase.",
+      checkout_mode: "pricing_only",
+      recommended_next_action: "fund_wallet",
+      wallet_funding: cartWalletHandoff(cart),
+      note: "Cart priced successfully. Production agents should fund a buyer wallet first; POST /api/buyer/start-checkout or open wallet_funding.offer_url.",
     });
   } catch (e) {
     if (e instanceof CartValidationError) {

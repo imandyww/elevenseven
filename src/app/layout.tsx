@@ -73,6 +73,8 @@ export const metadata: Metadata = {
     types: {
       // Curated site map for LLMs and autonomous agents (llmstxt.org).
       "text/plain": "/llms.txt",
+      "application/agent-commerce+json": "/.well-known/agent-commerce.json",
+      "application/openapi+json": "/openapi.json",
     },
   },
 };

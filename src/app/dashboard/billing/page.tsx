@@ -46,8 +46,8 @@ export default async function BillingPage({
       {purchase === "success" && (
         <div className="rounded-2xl border border-mint/40 bg-mint-soft p-4 text-sm text-emerald-700">
           ✓ Payment received. Credits appear in the ledger as soon as the
-          Stripe webhook confirms — usually within seconds. Refresh if you
-          don&apos;t see them yet.
+          server-side Stripe reconciliation confirms payment. Refresh if you
+          don&apos;t see them yet, or use the Revenue dashboard sync.
         </div>
       )}
       {purchase === "cancelled" && (

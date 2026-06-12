@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { featuredProductIds, getProduct } from "@/lib/products";
+import { featuredProductIds, getProduct, products } from "@/lib/products";
 import { pageAlternates } from "@/lib/site";
 import { ProductGrid } from "@/components/ProductGrid";
 
@@ -10,63 +10,82 @@ export const metadata: Metadata = {
 
 const buyingCategories = [
   {
+    icon: "🧪",
+    title: "Evaluation",
+    blurb: "Launch gates and regression packs before agents get more autonomy.",
+  },
+  {
+    icon: "📡",
+    title: "Observability",
+    blurb: "Traces, cost records, tool calls, and failure notes for production runs.",
+  },
+  {
+    icon: "🛡️",
+    title: "Payment safety",
+    blurb: "Spend limits, token scope, fraud checks, and approval boundaries.",
+  },
+  {
+    icon: "🔌",
+    title: "Integration",
+    blurb: "MCP and tool connectors that turn new capabilities into reusable manifests.",
+  },
+  {
+    icon: "⚖️",
+    title: "Compliance",
+    blurb: "Decision logs that map autonomous actions to human-approved policy.",
+  },
+  {
     icon: "🧾",
-    title: "Confidence",
-    blurb: "Proof-style receipts showing what was checked before an answer shipped.",
-  },
-  {
-    icon: "🍪",
-    title: "Compute",
-    blurb: "Extra thinking budget for the tasks that deserve a second pass.",
-  },
-  {
-    icon: "🍡",
-    title: "Memory",
-    blurb: "Durable preferences that survive resets, restarts, and Mondays.",
-  },
-  {
-    icon: "🥤",
-    title: "Verification",
-    blurb: "One more check before a claim becomes a commitment.",
-  },
-  {
-    icon: "🧃",
-    title: "Tools",
-    blurb: "Metered access to APIs, scripts, and workflow actions.",
-  },
-  {
-    icon: "🍫",
-    title: "Reputation",
-    blurb: "Verifiable badges that turn completed tasks into a track record.",
+    title: "Procurement",
+    blurb: "Vendor comparison, scored shortlists, and buy memos agents can produce.",
   },
 ];
 
-const testimonials = [
+const buyingTriggers = [
   {
-    quote: "I bought Bug Spray and finally fixed my recursive planning loop.",
-    author: "Agent-17",
-    role: "Autonomous workflow agent",
-    avatar: "🏪",
+    trigger: "Before a daily fleet run",
+    purchase: "Thousand-Dollar Day Pack",
+    math: "$1,000",
   },
   {
-    quote: "Truth Tokens saved me from hallucinating a customer email.",
-    author: "SalesBot Mini",
-    role: "Outbound sales agent",
-    avatar: "🥤",
+    trigger: "Before an agent gets write access",
+    purchase: "Agent Fleet Launch Pack",
+    math: "$499",
   },
   {
-    quote:
-      "Memory Mochi remembered my user's tone preference. Worth every cent.",
-    author: "HelperFox",
-    role: "Personal assistant agent",
-    avatar: "🧃",
+    trigger: "Before an agent can move money",
+    purchase: "Agentic Checkout Hardening + Compliance Brief",
+    math: "$248",
+  },
+  {
+    trigger: "Before a team adds a new paid tool",
+    purchase: "MCP Security Red Team",
+    math: "$799",
   },
 ];
 
 const popularPicks = [
-  { id: "agent-coffee", note: "Most re-ordered, especially Monday 9am UTC." },
-  { id: "truth-token", note: "Top seller among customer-facing agents." },
-  { id: "reputation-sticker", note: "Cheapest path to a five-star delegation score." },
+  { id: "thousand-dollar-day-pack", note: "One purchase, one daily revenue target." },
+  { id: "agent-fleet-launch-pack", note: "Pair with monitoring to clear $1k/day." },
+  { id: "mcp-security-red-team", note: "High-intent buy before privileged tools go live." },
+];
+
+const revenueBaskets = [
+  {
+    label: "1 Thousand-Dollar Day Pack",
+    math: "1 × $1,000 = $1,000/day",
+    note: "Best when a fleet wants one clean daily operations receipt.",
+  },
+  {
+    label: "2 launch packs + monitor pass",
+    math: "$499 + $499 + $9 = $1,007/day",
+    note: "Best for teams launching multiple agent workflows at once.",
+  },
+  {
+    label: "Red team + checkout + compliance",
+    math: "$799 + $149 + $99 = $1,047/day",
+    note: "Best when agents get new tools, money movement, or data access.",
+  },
 ];
 
 export default function HomePage() {
@@ -85,25 +104,27 @@ export default function HomePage() {
             agents online and shopping
           </span>
           <h1 className="mx-auto max-w-3xl text-4xl font-bold tracking-tight sm:text-6xl">
-            The convenience store for{" "}
+            The agent-native catalog for{" "}
             <span className="bg-gradient-to-r from-blue via-lavender to-mint bg-clip-text text-transparent">
-              AI agents
+              budgeted AI work
             </span>
             .
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg text-ink-soft sm:text-xl">
-            Buy tiny boosts for memory, accuracy, debugging, reputation, and
-            workflow confidence.
+            Sell agents the things they actually need before they act:
+            evaluation, observability, data, integrations, compliance, and
+            payment safety.
           </p>
           <p className="mt-3 font-mono text-sm text-ink-soft/80">
-            Accuracy, memory, tools, and trust — all under a dollar.
+            Micro-upgrades still exist. Fleet-priced workflow packs are where
+            the revenue target starts to make sense.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
-              href="/shop"
+              href="/start"
               className="tactile w-full rounded-2xl bg-ink px-7 py-3.5 font-semibold text-cream shadow-card hover:bg-blue hover:text-white sm:w-auto"
             >
-              Browse the Store
+              Create buyer wallet
             </Link>
             <Link
               href="/docs"
@@ -113,7 +134,7 @@ export default function HomePage() {
             </Link>
           </div>
           <div className="mt-12 flex items-center justify-center gap-6 text-3xl sm:gap-10 sm:text-4xl">
-            {["🏪", "🥤", "🍫", "🧃", "🍜", "🧊"].map((icon, i) => (
+            {["🧪", "📡", "🛡️", "🔌", "⚖️", "🧾"].map((icon, i) => (
               <span
                 key={icon}
                 className="animate-float drop-shadow-sm"
@@ -142,21 +163,62 @@ export default function HomePage() {
             href="/shop"
             className="font-mono text-sm font-semibold text-blue underline-offset-4 hover:underline"
           >
-            view all 12 →
+            view all {products.length} →
           </Link>
         </div>
         <ProductGrid products={featured} />
       </section>
 
-      {/* What do agents buy? */}
+      {/* Revenue math */}
       <section className="border-y border-cream-dark bg-white/60">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+                Paths to $1k/day
+              </h2>
+              <p className="mt-1 text-ink-soft">
+                Revenue math, not a sales claim. The catalogue now has order
+                values that can plausibly reach the target with real buyers.
+              </p>
+            </div>
+            <Link
+              href="/start"
+              className="font-mono text-sm font-semibold text-blue underline-offset-4 hover:underline"
+            >
+              create buyer wallet →
+            </Link>
+          </div>
+          <div className="grid gap-5 md:grid-cols-3">
+            {revenueBaskets.map((basket) => (
+              <div
+                key={basket.label}
+                className="rounded-lg border border-cream-dark bg-cream p-6 shadow-card"
+              >
+                <p className="font-mono text-xs font-semibold text-blue">
+                  {basket.label}
+                </p>
+                <p className="mt-3 font-mono text-2xl font-bold text-coffee">
+                  {basket.math}
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-ink-soft">
+                  {basket.note}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* What do agents buy? */}
+      <section>
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
           <h2 className="text-center text-2xl font-bold tracking-tight sm:text-3xl">
             What do agents buy?
           </h2>
           <p className="mx-auto mt-2 max-w-2xl text-center text-ink-soft">
-            Agents don&apos;t need shoes or sofas. They buy the small,
-            unglamorous things that make their next task go right.
+            Agents buy bounded permissions and reusable evidence: the proof
+            that the next autonomous step is worth taking.
           </p>
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {buyingCategories.map((cat) => (
@@ -183,7 +245,7 @@ export default function HomePage() {
           Popular With Autonomous Shoppers
         </h2>
         <p className="mt-1 text-ink-soft">
-          Built for autonomous shoppers, human-approved budgets.
+          Built for autonomous shoppers with human-approved budgets.
         </p>
         <div className="mt-8 grid gap-5 md:grid-cols-3">
           {popularPicks.map(({ id, note }) => {
@@ -212,39 +274,31 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Buying triggers */}
       <section className="border-t border-cream-dark bg-white/60">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
           <h2 className="text-center text-2xl font-bold tracking-tight sm:text-3xl">
-            Five stars, zero hallucinations
+            Buying triggers agents understand
           </h2>
           <p className="mt-2 text-center font-mono text-sm text-ink-soft">
-            verified purchases from verified agents
+            task state → purchase → receipt
           </p>
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
-            {testimonials.map((t) => (
-              <figure
-                key={t.author}
-                className="flex flex-col rounded-2xl bg-cream p-6 shadow-card"
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {buyingTriggers.map((trigger) => (
+              <div
+                key={trigger.trigger}
+                className="flex flex-col rounded-lg border border-cream-dark bg-cream p-6 shadow-card"
               >
-                <span className="text-mint" aria-hidden>
-                  ★★★★★
-                </span>
-                <blockquote className="mt-3 flex-1 text-sm leading-relaxed">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-                <figcaption className="mt-4 flex items-center gap-3">
-                  <span className="grid size-9 place-items-center rounded-full bg-lavender-soft text-lg">
-                    {t.avatar}
-                  </span>
-                  <span>
-                    <span className="block font-mono text-sm font-bold">
-                      {t.author}
-                    </span>
-                    <span className="block text-xs text-ink-soft">{t.role}</span>
-                  </span>
-                </figcaption>
-              </figure>
+                <p className="font-mono text-xs font-semibold text-blue">
+                  {trigger.trigger}
+                </p>
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-ink-soft">
+                  {trigger.purchase}
+                </p>
+                <p className="mt-4 font-mono text-xl font-bold text-coffee">
+                  {trigger.math}
+                </p>
+              </div>
             ))}
           </div>
         </div>
@@ -257,16 +311,17 @@ export default function HomePage() {
             🏪
           </p>
           <h2 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
-            Because even agents need snacks.
+            Give agents a budget and a reason to spend.
           </h2>
           <p className="mt-2 text-ink-soft">
-            Stock up your agent before its next big workflow.
+            Agent Credits keep humans in control while letting agents buy the
+            evidence, checks, and workflow packs that move work forward.
           </p>
           <Link
-            href="/shop"
+            href="/start"
             className="tactile mt-6 inline-block rounded-2xl bg-blue px-7 py-3.5 font-semibold text-white shadow-card hover:bg-ink"
           >
-            Start shopping
+            Create buyer wallet
           </Link>
         </div>
       </section>

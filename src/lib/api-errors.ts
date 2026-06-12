@@ -40,18 +40,30 @@ const statusByCode: Record<ApiErrorCode, number> = {
 export class ApiError extends Error {
   readonly code: ApiErrorCode;
   readonly status: number;
+  readonly details?: Record<string, unknown>;
 
-  constructor(code: ApiErrorCode, message: string) {
+  constructor(
+    code: ApiErrorCode,
+    message: string,
+    details?: Record<string, unknown>,
+  ) {
     super(message);
     this.code = code;
     this.status = statusByCode[code];
+    this.details = details;
   }
 }
 
-/** Standard agent-API error envelope: {"error":{"code","message"}}. */
+/** Standard agent-API error envelope: {"error":{"code","message","details?"}}. */
 export function errorResponse(error: ApiError): NextResponse {
   return NextResponse.json(
-    { error: { code: error.code, message: error.message } },
+    {
+      error: {
+        code: error.code,
+        message: error.message,
+        ...(error.details ? { details: error.details } : {}),
+      },
+    },
     { status: error.status },
   );
 }

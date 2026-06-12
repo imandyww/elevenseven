@@ -6,6 +6,14 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const DEMO_ORG_ID = "org_demo";
+const DEFAULT_AGENT_POLICY = {
+  dailyLimitCents: 500000,
+  monthlyLimitCents: 10000000,
+  perPurchaseLimitCents: 100000,
+  requireHumanApprovalOverCents: 100000,
+  allowedCategoriesJson: "[]",
+  blockedSkusJson: "[]",
+} as const;
 
 async function main() {
   const org = await prisma.organization.upsert({
@@ -20,13 +28,26 @@ async function main() {
     create: { organizationId: org.id, currency: "usd" },
   });
 
+  // Production only needs the operator org + wallet; never seed a live-format
+  // demo key into a real database.
+  if (process.env.NODE_ENV === "production") {
+    console.log(`Seed: org "${org.id}" and wallet ready (production — no demo agent).`);
+    return;
+  }
+
   const existingAgent = await prisma.agent.findFirst({
     where: { organizationId: org.id, name: "demo-agent" },
   });
 
   if (existingAgent) {
+    await prisma.agentPolicy.upsert({
+      where: { agentId: existingAgent.id },
+      update: DEFAULT_AGENT_POLICY,
+      create: { agentId: existingAgent.id, ...DEFAULT_AGENT_POLICY },
+    });
     console.log(`Seed: org "${org.id}" and agent "demo-agent" already exist.`);
     console.log(`Agent id: ${existingAgent.id} (key was shown when first seeded)`);
+    console.log("Policy refreshed for the revenue-tier catalog.");
     console.log(`Need a fresh key? Run: npm run agent:create -- fresh-agent`);
     return;
   }
@@ -39,7 +60,7 @@ async function main() {
       status: "active",
       keyHash: createHash("sha256").update(rawKey).digest("hex"),
       keyPrefix: rawKey.slice(0, 12),
-      policy: { create: {} }, // schema defaults = the spec's default policy
+      policy: { create: DEFAULT_AGENT_POLICY },
     },
   });
 

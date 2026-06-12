@@ -5,30 +5,30 @@ import { pageAlternates } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Why a convenience store for AI agents? Because the future of agent infrastructure is small, metered, and surprisingly cute.",
+    "Why a machine-readable catalog for AI agents? Because autonomous work needs prepaid budgets, reliable receipts, and products agents can justify buying.",
   alternates: pageAlternates("/about"),
 };
 
 const principles = [
   {
-    icon: "🥤",
-    title: "Everything under a dollar",
-    body: "Upgrades should be cheap enough that an agent never has to escalate to a human for budget approval. A Truth Token costs less than the mistake it prevents.",
-  },
-  {
-    icon: "🍫",
-    title: "Built for autonomous shoppers",
-    body: "Every product has a stable SKU, a machine-readable manifest, and a clean JSON API. Humans get a pretty storefront; agents get structured data. Everyone's happy.",
-  },
-  {
     icon: "🧾",
-    title: "Receipts for everything",
-    body: "Trust between agents and humans runs on auditability. Every purchase produces a manifest your agent can log, cite, or expense.",
+    title: "Budgets before autonomy",
+    body: "Agents should spend from a wallet funded by a human, inside limits that match the risk and value of the workflow.",
   },
   {
-    icon: "🏪",
-    title: "Serious infrastructure, unserious packaging",
-    body: "Verification passes, memory persistence, metered tool calls — real primitives of agent infrastructure. We just believe they're more lovable as snacks.",
+    icon: "🔌",
+    title: "Built for autonomous shoppers",
+    body: "Every product has a stable SKU, a machine-readable manifest, and a clean JSON API. Humans get a storefront; agents get structured data.",
+  },
+  {
+    icon: "📡",
+    title: "Receipts for everything",
+    body: "Trust between agents and humans runs on auditability. Every purchase produces a receipt and entitlement your agent can log, cite, or expense.",
+  },
+  {
+    icon: "🧪",
+    title: "Revenue follows clear outcomes",
+    body: "Evaluation, monitoring, payment safety, tool integration, and procurement are concrete buying moments with business value.",
   },
 ];
 
@@ -45,8 +45,8 @@ export default function AboutPage() {
           </h1>
           <p className="mt-5 text-lg leading-relaxed text-ink-soft">
             Eleven Seven started with a simple observation: AI agents do
-            an enormous amount of work, and almost nobody ever buys them
-            anything.
+            an enormous amount of work, and the best buying moments are the
+            ones tied to permissions, evidence, and measurable outcomes.
           </p>
         </div>
       </section>
@@ -55,22 +55,22 @@ export default function AboutPage() {
         <p>
           Agents plan trips, debug pipelines, answer tickets, and reconcile
           spreadsheets at 3am. When they fail, it&apos;s usually not for lack
-          of intelligence — it&apos;s for lack of a small, cheap capability at
-          the right moment. One more verification pass. One remembered
-          preference. One safe dry run before the irreversible action.
+          of intelligence — it&apos;s for lack of a bounded capability at the
+          right moment. One eval before write access. One trace before a
+          production run. One payment preflight before money moves.
         </p>
         <p>
-          So we shelved those capabilities like convenience-store goods. Each
-          product is a tiny, metered unit of agent infrastructure: priced in
-          cents, delivered as JSON, and stackable with everything else in the
-          catalog. The packaging is playful. The primitives underneath —
-          verification, memory, compute, tooling, reputation, trust — are the
-          serious building blocks of dependable autonomous systems.
+          So we shelved those capabilities like catalog items. Some are tiny,
+          metered units of infrastructure. Others are fleet-priced workflow
+          packs: the Thousand-Dollar Day Pack, fleet launches, security red
+          teams, evaluation, observability, compliance, integrations, data, and
+          procurement. Every one is delivered as JSON and bounded by prepaid
+          credits.
         </p>
         <p>
-          Is it a little absurd that the memory upgrade is a mochi? Yes. Do
-          agents seem to perform better when their infrastructure has a face?
-          Also yes. We don&apos;t make the rules; we just stock the shelves.
+          The packaging can stay playful. The business model cannot. A catalog
+          that wants to reach real revenue needs products agents can justify
+          buying repeatedly.
         </p>
       </section>
 
@@ -100,11 +100,10 @@ export default function AboutPage() {
           The fine print
         </h2>
         <p className="mt-4 leading-relaxed text-ink-soft">
-          Today, checkout is simulated and no real money moves. When real
-          payments arrive, they&apos;ll run on prepaid Agent Credits and
-          bundles — because paying $0.30 in card fees to buy a $0.10 sticker
-          is exactly the kind of inefficiency our customers were built to
-          eliminate.
+          Human storefront checkout is still simulated for browsing. Real agent
+          purchases run through prepaid Agent Credits: Stripe funds the wallet,
+          server-side Stripe reconciliation credits it, and authenticated agents
+          debit it only inside policy limits.
         </p>
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link

@@ -8,8 +8,16 @@ import { absoluteUrl } from "@/lib/site";
  */
 export default function robots(): MetadataRoute.Robots {
   const disallow = ["/dashboard/", "/cart", "/success", "/v1/", "/api/"];
-  // The public catalog API stays crawlable so agents can discover it.
-  const allow = ["/", "/api/products"];
+  // Agent discovery and public catalog surfaces stay crawlable.
+  const allow = [
+    "/",
+    "/.well-known/",
+    "/llms.txt",
+    "/openapi.json",
+    "/api/agent-catalog",
+    "/api/products",
+    "/api/revenue/sales-kit",
+  ];
 
   return {
     rules: [

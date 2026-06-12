@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { DEMO_ORG_ID } from "@/lib/org";
 import { formatCents } from "@/lib/money";
 import { agentSpendSinceCents, startOfUtcDay } from "@/lib/credits";
+import { CreateAgentForm } from "./CreateAgentForm";
 
 export const metadata: Metadata = { title: "Agents" };
 export const dynamic = "force-dynamic";
@@ -27,13 +28,12 @@ export default async function AgentsPage() {
 
   return (
     <div className="space-y-6">
+      <CreateAgentForm />
+
       <div className="overflow-x-auto rounded-2xl bg-white shadow-card">
         {agents.length === 0 ? (
           <p className="p-8 text-center text-sm text-ink-soft">
-            No agents yet. Create one with{" "}
-            <code className="rounded bg-cream-dark px-1.5 py-0.5 font-mono text-xs">
-              npm run agent:create -- &quot;my-agent&quot;
-            </code>
+            No agents yet. Create one above, then fund the wallet in Billing.
           </p>
         ) : (
           <table className="w-full text-sm">
@@ -87,7 +87,8 @@ export default async function AgentsPage() {
         )}
       </div>
       <p className="font-mono text-xs text-ink-soft">
-        New keys are created via CLI and shown exactly once:{" "}
+        New dashboard keys are shown exactly once. CLI creation still works for
+        automation:{" "}
         <code className="rounded bg-cream-dark px-1.5 py-0.5">
           npm run agent:create -- &quot;name&quot;
         </code>

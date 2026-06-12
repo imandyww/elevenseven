@@ -12,6 +12,7 @@ function entitlementJson(ent: {
   manifestJson: string;
   allowedUses: number;
   remainingUses: number;
+  expiresAt: Date | null;
   consumedAt: Date | null;
 }) {
   return {
@@ -20,6 +21,7 @@ function entitlementJson(ent: {
     manifest: JSON.parse(ent.manifestJson),
     allowed_uses: ent.allowedUses,
     remaining_uses: ent.remainingUses,
+    expires_at: ent.expiresAt?.toISOString() ?? null,
     consumed_at: ent.consumedAt?.toISOString() ?? null,
   };
 }
@@ -34,7 +36,7 @@ export async function POST(
 ) {
   try {
     const agent = await authenticateAgent(request);
-    enforceRateLimit(agent.keyHash);
+    await enforceRateLimit(agent.keyHash);
     const { id } = await params;
 
     const idempotencyKey = request.headers.get("idempotency-key")?.trim();

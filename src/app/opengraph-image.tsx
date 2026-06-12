@@ -28,7 +28,7 @@ export default function Image() {
             marginTop: 28,
             fontSize: 72,
             fontWeight: 700,
-            letterSpacing: "-0.03em",
+            letterSpacing: 0,
             display: "flex",
           }}
         >
@@ -53,7 +53,7 @@ export default function Image() {
             display: "flex",
           }}
         >
-          accuracy · memory · tools · trust — all under a dollar
+          $1k/day packs · fleet launches · agent safety
         </div>
       </div>
     ),

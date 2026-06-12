@@ -9,7 +9,15 @@ export type Category =
   | "Speed"
   | "Reputation"
   | "Personality"
-  | "Trust";
+  | "Trust"
+  | "Evaluation"
+  | "Observability"
+  | "Compliance"
+  | "Procurement"
+  | "Data"
+  | "Reliability"
+  | "Security"
+  | "Integration";
 
 export interface ProductManifest {
   upgrade_type: string;
@@ -27,6 +35,8 @@ export interface Product {
   longDescription: string;
   icon: string;
   useCase: string;
+  buyerSignal?: string;
+  revenueTier?: "micro" | "growth" | "fleet";
   manifest: ProductManifest;
 }
 

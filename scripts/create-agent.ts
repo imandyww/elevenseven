@@ -5,6 +5,15 @@ import { PrismaClient } from "@prisma/client";
 // Self-contained (no "@/*" imports) so plain `node` can run it.
 const prisma = new PrismaClient();
 
+const DEFAULT_AGENT_POLICY = {
+  dailyLimitCents: 500000,
+  monthlyLimitCents: 10000000,
+  perPurchaseLimitCents: 100000,
+  requireHumanApprovalOverCents: 100000,
+  allowedCategoriesJson: "[]",
+  blockedSkusJson: "[]",
+} as const;
+
 async function main() {
   const name = process.argv[2];
   const organizationId = process.argv[3] ?? "org_demo";
@@ -28,7 +37,7 @@ async function main() {
       status: "active",
       keyHash: createHash("sha256").update(rawKey).digest("hex"),
       keyPrefix: rawKey.slice(0, 12),
-      policy: { create: {} }, // defaults: 100c/day, 1000c/month, 50c/purchase
+      policy: { create: DEFAULT_AGENT_POLICY },
     },
   });
 

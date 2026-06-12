@@ -1,28 +1,118 @@
 // Agent Dollar Store — payments, wallets, and agent spending.
 //
-// SQLite notes (Postgres migration TODOs):
-// - String columns marked "enum:" should become real enums.
-// - String columns marked "json:" should become Json.
-// - Add CHECK (balance_after_cents >= 0) on LedgerEntry; today the
-//   non-negative invariant is enforced inside serializable transactions.
+// Postgres. DATABASE_URL should be the pooled (PgBouncer) connection string
+// with ?pgbouncer=true; DIRECT_URL the unpooled one for migrations.
+// Remaining TODO: String columns marked "json:" should become Json (touches
+// JSON.parse/stringify call sites — deferred).
+//
+// A hand-written migration adds CHECK ("balanceAfterCents" >= 0) on
+// LedgerEntry as a backstop to the serializable-transaction invariant.
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum OrganizationSource {
+  seed
+  self_serve
+  manual
+}
+
+enum PilotLeadStatus {
+  new
+  contacted
+  won
+  lost
+}
+
+enum LedgerEntryType {
+  credit
+  debit
+  refund
+  adjustment
+}
+
+enum CheckoutIntentStatus {
+  open
+  paid
+  expired
+  cancelled
+}
+
+enum AuditActorType {
+  user
+  agent
+  system
+}
+
+enum AgentStatus {
+  active
+  paused
+  revoked
+}
+
+enum OrderStatus {
+  completed
+  failed
+  refunded
+}
+
+enum FundingRequestStatus {
+  open
+  funded
+  cancelled
+}
+
+enum StandingOrderCadence {
+  daily
+}
+
+enum StandingOrderStatus {
+  requested
+  active
+  paused
+  cancelled
 }
 
 model Organization {
-  id        String   @id // seeded as "org_demo"
-  name      String
-  createdAt DateTime @default(now())
+  id           String   @id // seeded as "org_demo"; self-serve orgs use org_<hex>
+  name         String
+  billingEmail String?
+  website      String?
+  source       OrganizationSource @default(seed)
+  stripeCustomerId String? @unique
+  createdAt    DateTime @default(now())
 
   wallet Wallet?
   agents Agent[]
   orders Order[]
+  fundingRequests FundingRequest[]
+  standingOrders StandingOrder[]
+  checkoutIntents CheckoutIntent[]
+}
+
+model PilotLead {
+  id                    String   @id @default(cuid())
+  organizationName      String
+  contactName           String?
+  email                 String
+  website               String?
+  useCase               String
+  targetDailySpendCents Int      @default(100000)
+  requestedSku          String   @default("thousand-dollar-day-pack")
+  status                PilotLeadStatus @default(new)
+  source                String   @default("pilot_page")
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([status, createdAt])
+  @@index([email])
 }
 
 model Wallet {
@@ -45,7 +135,7 @@ model LedgerEntry {
   organizationId    String
   agentId           String?
   orderId           String?
-  type              String // enum: "credit" | "debit" | "refund" | "adjustment"
+  type              LedgerEntryType
   amountCents       Int // always positive; `type` carries direction
   balanceAfterCents Int
   source            String // "stripe_checkout" | "agent_purchase" | "dev_grant"
@@ -66,10 +156,37 @@ model StripeEvent {
   rawJson       String // json:
 }
 
+model CheckoutIntent {
+  id                 String    @id @default(cuid())
+  organizationId     String
+  bundleId           String
+  amountCents        Int
+  creditsCents       Int
+  status             CheckoutIntentStatus @default(open)
+  stripeSessionId    String    @unique
+  stripeCustomerId   String?
+  checkoutUrl        String?
+  recoveryToken      String?   @unique
+  followupCount      Int       @default(0)
+  lastFollowedUpAt   DateTime?
+  returnPath         String
+  fundingRequestId   String?
+  standingOrderId    String?
+  paidAt             DateTime?
+  expiresAt          DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+
+  @@index([organizationId, status, createdAt])
+  @@index([status, createdAt])
+}
+
 model AuditLog {
   id             String   @id @default(cuid())
   organizationId String?
-  actorType      String // enum: "user" | "agent" | "system"
+  actorType      AuditActorType
   actorId        String?
   action         String // e.g. "wallet.credited", "purchase.completed", "purchase.denied", "policy.updated"
   metadataJson   String // json:
@@ -82,15 +199,17 @@ model Agent {
   id             String    @id @default(cuid())
   organizationId String
   name           String
-  status         String    @default("active") // enum: "active" | "paused" | "revoked"
+  status         AgentStatus @default(active)
   keyHash        String    @unique // sha256 hex of the raw API key
   keyPrefix      String // e.g. "ag_live_a1b2" — display only, never the raw key
   lastUsedAt     DateTime?
   createdAt      DateTime  @default(now())
 
-  organization Organization  @relation(fields: [organizationId], references: [id])
+  organization Organization @relation(fields: [organizationId], references: [id])
   policy       AgentPolicy?
   orders       Order[]
+  fundingRequests FundingRequest[]
+  standingOrders StandingOrder[]
 
   @@index([organizationId])
 }
@@ -98,12 +217,12 @@ model Agent {
 model AgentPolicy {
   id                            String   @id @default(cuid())
   agentId                       String   @unique
-  dailyLimitCents               Int      @default(100)
-  monthlyLimitCents             Int      @default(1000)
-  perPurchaseLimitCents         Int      @default(50)
+  dailyLimitCents               Int      @default(500000)
+  monthlyLimitCents             Int      @default(10000000)
+  perPurchaseLimitCents         Int      @default(100000)
   allowedCategoriesJson         String   @default("[]") // json: [] = all categories allowed
   blockedSkusJson               String   @default("[]") // json:
-  requireHumanApprovalOverCents Int      @default(100)
+  requireHumanApprovalOverCents Int      @default(100000)
   createdAt                     DateTime @default(now())
   updatedAt                     DateTime @updatedAt
 
@@ -115,7 +234,7 @@ model Order {
   organizationId String
   agentId        String
   totalCents     Int
-  status         String // enum: "completed" | "failed" | "refunded"
+  status         OrderStatus
   reason         String?
   idempotencyKey String
   requestHash    String // sha256 of the canonical request body, for replay-vs-conflict detection
@@ -174,6 +293,60 @@ model Entitlement {
   consumptions EntitlementConsumption[]
 
   @@index([agentId])
+}
+
+model FundingRequest {
+  id                  String   @id @default(cuid())
+  organizationId      String
+  agentId             String
+  sku                 String
+  productName         String
+  quantity            Int      @default(1)
+  totalCents          Int
+  currentBalanceCents Int      @default(0)
+  shortfallCents      Int
+  recommendedBundleId String
+  reason              String?
+  status              FundingRequestStatus @default(open)
+  source              String   @default("agent_api") // "agent_api" | "purchase_denied"
+  idempotencyKey      String   @unique
+  requestHash         String
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+  agent        Agent        @relation(fields: [agentId], references: [id])
+
+  @@index([organizationId, status, createdAt])
+  @@index([agentId, createdAt])
+}
+
+model StandingOrder {
+  id                   String    @id @default(cuid())
+  organizationId       String
+  agentId              String
+  sku                  String
+  productName          String
+  quantity             Int       @default(1)
+  totalCents           Int
+  cadence              StandingOrderCadence @default(daily)
+  status               StandingOrderStatus  @default(requested)
+  reason               String
+  idempotencyKey       String    @unique
+  requestHash          String
+  lastRunAt            DateTime?
+  lastRunStatus        String?
+  lastOrderId          String?
+  lastFundingRequestId String?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+  agent        Agent        @relation(fields: [agentId], references: [id])
+
+  @@index([organizationId, status, createdAt])
+  @@index([agentId, createdAt])
+  @@index([status, cadence, lastRunAt])
 }
 
 model EntitlementConsumption {

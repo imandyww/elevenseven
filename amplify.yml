@@ -1,0 +1,30 @@
+# AWS Amplify Hosting build spec.
+#
+# Two Amplify-specific requirements:
+# 1. Console env vars exist at BUILD time only — the SSR runtime does not
+#    inherit them, so runtime secrets are written into .env.production before
+#    `next build`. Verify this is still required for your Amplify Next.js
+#    compute version; remove the grep step if the platform injects them.
+# 2. `prisma migrate deploy` runs during the build (DIRECT_URL must be the
+#    unpooled Postgres URL, publicly reachable from the build container).
+#    Migrations apply before the new code serves traffic — keep them
+#    backward-compatible once real data exists.
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm ci
+    build:
+      commands:
+        - npx prisma migrate deploy
+        - env | grep -E '^(DATABASE_URL|DIRECT_URL|STRIPE_SECRET_KEY|STRIPE_WEBHOOK_SECRET|STANDING_ORDER_RUN_SECRET|OPERATOR_DASHBOARD_SECRET|UPSTASH_REDIS_REST_URL|UPSTASH_REDIS_REST_TOKEN|REQUIRE_LIVE_STRIPE|SENTRY_DSN)=' >> .env.production || true
+        - npm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - node_modules/**/*
+      - .next/cache/**/*

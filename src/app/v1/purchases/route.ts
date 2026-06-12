@@ -17,7 +17,7 @@ import { processPurchase, purchaseRequestSchema } from "@/lib/purchases";
 export async function POST(request: Request) {
   try {
     const agent = await authenticateAgent(request);
-    enforceRateLimit(agent.keyHash);
+    await enforceRateLimit(agent.keyHash);
 
     const idempotencyKey = request.headers.get("idempotency-key")?.trim();
     if (!idempotencyKey) {
