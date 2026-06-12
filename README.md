@@ -1,4 +1,4 @@
-# 🤖 Agent Dollar Store
+# 🏪 Eleven Seven
 
 **Tiny upgrades for hardworking AI agents.**
 

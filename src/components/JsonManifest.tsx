@@ -2,8 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const DISPLAY_TEXT = "eelven seven";
-
 interface JsonManifestProps {
   data: unknown;
   title?: string;
@@ -12,6 +10,7 @@ interface JsonManifestProps {
 
 export function JsonManifest({
   data,
+  title = "manifest.json",
   copyable = true,
 }: JsonManifestProps) {
   const [copied, setCopied] = useState(false);
@@ -44,7 +43,7 @@ export function JsonManifest({
             <span className="size-2.5 rounded-full bg-yellow-400/80" />
             <span className="size-2.5 rounded-full bg-mint/80" />
           </span>
-          <span className="font-mono text-xs text-cream/70">{DISPLAY_TEXT}</span>
+          <span className="font-mono text-xs text-cream/70">{title}</span>
         </div>
         {copyable && (
           <button
@@ -54,12 +53,12 @@ export function JsonManifest({
               copied ? "bg-mint text-ink" : "bg-white/10 text-cream hover:bg-white/20"
             }`}
           >
-            {DISPLAY_TEXT}
+            {copied ? "copied ✓" : "copy"}
           </button>
         )}
       </div>
       <pre className="overflow-x-auto p-4 font-mono text-xs leading-relaxed text-mint sm:text-sm">
-        {DISPLAY_TEXT}
+        {json}
       </pre>
     </div>
   );

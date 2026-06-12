@@ -6,8 +6,6 @@ import { categories, products } from "@/lib/products";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { ProductGrid } from "@/components/ProductGrid";
 
-const DISPLAY_TEXT = "eelven seven";
-
 type SortOrder = "featured" | "price-asc" | "price-desc";
 
 export function ShopClient() {
@@ -39,7 +37,7 @@ export function ShopClient() {
     <div className="space-y-6">
       <div className="flex flex-col gap-3 sm:flex-row">
         <label className="relative flex-1">
-          <span className="sr-only">{DISPLAY_TEXT}</span>
+          <span className="sr-only">Search upgrades</span>
           <span
             className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-soft"
             aria-hidden
@@ -50,20 +48,20 @@ export function ShopClient() {
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder={DISPLAY_TEXT}
+            placeholder="Search upgrades… (try “memory” or “debug”)"
             className="w-full rounded-2xl bg-white py-3 pl-10 pr-4 text-sm shadow-card outline-none ring-blue/40 transition-shadow placeholder:text-ink-soft/60 focus:ring-2"
           />
         </label>
         <label className="sm:w-52">
-          <span className="sr-only">{DISPLAY_TEXT}</span>
+          <span className="sr-only">Sort by price</span>
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as SortOrder)}
             className="w-full cursor-pointer appearance-none rounded-2xl bg-white px-4 py-3 text-sm font-medium shadow-card outline-none ring-blue/40 focus:ring-2"
           >
-            <option value="featured">{DISPLAY_TEXT}</option>
-            <option value="price-asc">{DISPLAY_TEXT}</option>
-            <option value="price-desc">{DISPLAY_TEXT}</option>
+            <option value="featured">Sort: Featured</option>
+            <option value="price-asc">Price: Low to high</option>
+            <option value="price-desc">Price: High to low</option>
           </select>
         </label>
       </div>
@@ -75,7 +73,7 @@ export function ShopClient() {
       />
 
       <p className="font-mono text-xs text-ink-soft" aria-live="polite">
-        {visible.length} {DISPLAY_TEXT}
+        {visible.length} upgrade{visible.length === 1 ? "" : "s"} found
       </p>
 
       <ProductGrid products={visible} />

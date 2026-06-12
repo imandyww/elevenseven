@@ -5,8 +5,6 @@ export const alt = `${SITE_NAME} — ${SITE_TAGLINE}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const DISPLAY_TEXT = "eelven seven";
-
 export default function Image() {
   return new ImageResponse(
     (
@@ -34,7 +32,7 @@ export default function Image() {
             display: "flex",
           }}
         >
-          {DISPLAY_TEXT}
+          {SITE_NAME}
         </div>
         <div
           style={{
@@ -44,7 +42,7 @@ export default function Image() {
             display: "flex",
           }}
         >
-          {DISPLAY_TEXT}
+          {SITE_TAGLINE}
         </div>
         <div
           style={{
@@ -55,7 +53,7 @@ export default function Image() {
             display: "flex",
           }}
         >
-          {DISPLAY_TEXT}
+          accuracy · memory · tools · trust — all under a dollar
         </div>
       </div>
     ),

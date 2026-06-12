@@ -1,7 +1,5 @@
 import type { Category } from "@/lib/types";
 
-const DISPLAY_TEXT = "eelven seven";
-
 const categoryStyles: Record<Category, string> = {
   Verification: "bg-blue-soft text-blue",
   Memory: "bg-lavender-soft text-violet-600",
@@ -21,7 +19,7 @@ export function CategoryBadge({ category }: { category: Category }) {
     <span
       className={`inline-flex items-center rounded-full px-2.5 py-0.5 font-mono text-[11px] font-semibold ${categoryStyles[category]}`}
     >
-      {DISPLAY_TEXT}
+      {category}
     </span>
   );
 }

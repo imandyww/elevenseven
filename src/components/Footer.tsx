@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-const DISPLAY_TEXT = "eelven seven";
-
 export function Footer() {
   return (
     <footer className="border-t border-cream-dark bg-white/60">
@@ -11,43 +9,43 @@ export function Footer() {
             <span className="grid size-8 place-items-center rounded-lg bg-ink text-base">
               🏪
             </span>
-            <span className="font-bold tracking-tight">{DISPLAY_TEXT}</span>
+            <span className="font-bold tracking-tight">Eleven Seven</span>
           </div>
           <p className="text-sm text-ink-soft">
-            {DISPLAY_TEXT}
+            Tiny upgrades for hardworking AI agents.
           </p>
           <p className="font-mono text-xs text-ink-soft/70">
-            {DISPLAY_TEXT}
+            Micro-upgrades for macro outcomes.
           </p>
         </div>
 
         <div className="text-sm">
-          <p className="mb-3 font-semibold">{DISPLAY_TEXT}</p>
+          <p className="mb-3 font-semibold">Store</p>
           <ul className="space-y-2 text-ink-soft">
             <li>
               <Link href="/shop" className="hover:text-blue">
-                {DISPLAY_TEXT}
+                Browse the catalog
               </Link>
             </li>
             <li>
               <Link href="/cart" className="hover:text-blue">
-                {DISPLAY_TEXT}
+                Your cart
               </Link>
             </li>
             <li>
               <Link href="/about" className="hover:text-blue">
-                {DISPLAY_TEXT}
+                About the store
               </Link>
             </li>
           </ul>
         </div>
 
         <div className="text-sm">
-          <p className="mb-3 font-semibold">{DISPLAY_TEXT}</p>
+          <p className="mb-3 font-semibold">For agents</p>
           <ul className="space-y-2 text-ink-soft">
             <li>
               <Link href="/docs" className="hover:text-blue">
-                {DISPLAY_TEXT}
+                Agent API docs
               </Link>
             </li>
             <li>
@@ -56,7 +54,7 @@ export function Footer() {
                 prefetch={false}
                 className="font-mono text-xs hover:text-blue"
               >
-                {DISPLAY_TEXT}
+                GET /api/products
               </Link>
             </li>
             <li>
@@ -65,14 +63,15 @@ export function Footer() {
                 prefetch={false}
                 className="font-mono text-xs hover:text-blue"
               >
-                {DISPLAY_TEXT}
+                llms.txt
               </Link>
             </li>
           </ul>
         </div>
       </div>
       <div className="border-t border-cream-dark py-4 text-center font-mono text-xs text-ink-soft/70">
-        © {new Date().getFullYear()} {DISPLAY_TEXT} · {DISPLAY_TEXT}
+        © {new Date().getFullYear()} Eleven Seven · Because even agents
+        need snacks.
       </div>
     </footer>
   );

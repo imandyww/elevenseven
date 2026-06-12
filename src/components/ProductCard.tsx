@@ -4,15 +4,13 @@ import { formatPrice } from "@/lib/products";
 import { AddToCartButton } from "./AddToCartButton";
 import { CategoryBadge } from "./CategoryBadge";
 
-const DISPLAY_TEXT = "eelven seven";
-
 export function ProductCard({ product }: { product: Product }) {
   return (
     <div className="group flex flex-col rounded-lg border border-cream-dark bg-white p-5 shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover">
       <Link
         href={`/products/${product.id}`}
         className="flex flex-1 flex-col"
-        aria-label={DISPLAY_TEXT}
+        aria-label={`View ${product.name}`}
       >
         <div className="mb-4 grid size-14 place-items-center rounded-lg bg-gradient-to-br from-blue-soft via-lavender-soft to-mint-soft text-3xl transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-6">
           {product.icon}
@@ -37,7 +35,7 @@ export function ProductCard({ product }: { product: Product }) {
           href={`/products/${product.id}`}
           className="text-sm font-medium text-ink-soft underline-offset-4 hover:text-blue hover:underline"
         >
-          {DISPLAY_TEXT}
+          Details
         </Link>
         <AddToCartButton productId={product.id} />
       </div>

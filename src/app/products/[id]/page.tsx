@@ -9,8 +9,6 @@ import { JsonLd } from "@/components/JsonLd";
 import { JsonManifest } from "@/components/JsonManifest";
 import { ProductCard } from "@/components/ProductCard";
 
-const DISPLAY_TEXT = "eelven seven";
-
 interface ProductPageProps {
   params: Promise<{ id: string }>;
 }
@@ -24,21 +22,21 @@ export async function generateMetadata({
 }: ProductPageProps): Promise<Metadata> {
   const { id } = await params;
   const product = getProduct(id);
-  if (!product) return { title: DISPLAY_TEXT };
-  const title = DISPLAY_TEXT;
+  if (!product) return { title: "Product not found" };
+  const title = `${product.name} — ${formatPrice(product.price)} ${product.category} upgrade for AI agents`;
   return {
-    title,
-    description: DISPLAY_TEXT,
+    title: product.name,
+    description: product.description,
     alternates: pageAlternates(`/products/${product.id}`),
     openGraph: pageOpenGraph({
       title,
-      description: DISPLAY_TEXT,
+      description: product.description,
       path: `/products/${product.id}`,
     }),
     twitter: {
       card: "summary_large_image",
       title,
-      description: DISPLAY_TEXT,
+      description: product.description,
     },
   };
 }
@@ -83,7 +81,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: DISPLAY_TEXT, item: absoluteUrl("/shop") },
+      { "@type": "ListItem", position: 1, name: "Shop", item: absoluteUrl("/shop") },
       {
         "@type": "ListItem",
         position: 2,
@@ -97,11 +95,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
       <JsonLd data={productJsonLd} />
       <JsonLd data={breadcrumbJsonLd} />
-      <nav className="mb-6 font-mono text-xs text-ink-soft" aria-label={DISPLAY_TEXT}>
+      <nav className="mb-6 font-mono text-xs text-ink-soft" aria-label="Breadcrumb">
         <Link href="/shop" className="hover:text-blue">
-          {DISPLAY_TEXT}
+          shop
         </Link>{" "}
-        / <span className="text-ink">{DISPLAY_TEXT}</span>
+        / <span className="text-ink">{product.id}</span>
       </nav>
 
       <div className="grid gap-8 lg:grid-cols-5">
@@ -125,7 +123,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <AddToCartButton productId={product.id} size="lg" />
             </div>
             <p className="mt-4 font-mono text-[11px] text-ink-soft/70">
-              {DISPLAY_TEXT}
+              sku: {product.sku} · digital delivery · instant activation
             </p>
           </div>
         </div>
@@ -134,7 +132,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <div className="space-y-8 lg:col-span-3">
           <section className="rounded-2xl bg-white p-6 shadow-card sm:p-8">
             <h2 className="text-lg font-bold tracking-tight">
-              {DISPLAY_TEXT}
+              What this does for your agent
             </h2>
             <p className="mt-3 leading-relaxed text-ink-soft">
               {product.longDescription}
@@ -143,7 +141,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
           <section className="rounded-2xl bg-white p-6 shadow-card sm:p-8">
             <h2 className="text-lg font-bold tracking-tight">
-              {DISPLAY_TEXT}
+              Example use case
             </h2>
             <div className="mt-3 rounded-xl border-l-4 border-mint bg-mint-soft/50 p-4">
               <p className="text-sm leading-relaxed text-ink-soft">
@@ -154,7 +152,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
           <section>
             <h2 className="mb-3 text-lg font-bold tracking-tight">
-              {DISPLAY_TEXT}
+              Machine-readable purchase output
             </h2>
             <JsonManifest
               data={purchaseOutput}
@@ -167,7 +165,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       {/* Related */}
       <section className="mt-16">
         <h2 className="mb-6 text-xl font-bold tracking-tight">
-          {DISPLAY_TEXT}
+          Agents also bought
         </h2>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {related.map((p) => (

@@ -4,13 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCart } from "./cart-context";
 
-const DISPLAY_TEXT = "eelven seven";
-
 const navLinks = [
-  { href: "/shop", label: DISPLAY_TEXT },
-  { href: "/about", label: DISPLAY_TEXT },
-  { href: "/docs", label: DISPLAY_TEXT },
-  { href: "/dashboard/billing", label: DISPLAY_TEXT },
+  { href: "/shop", label: "Shop" },
+  { href: "/about", label: "About" },
+  { href: "/docs", label: "Agent API" },
+  { href: "/dashboard/billing", label: "Billing" },
 ];
 
 export function Header() {
@@ -26,10 +24,10 @@ export function Header() {
           </span>
           <span className="flex flex-col leading-none">
             <span className="text-sm font-bold tracking-tight sm:text-base">
-              {DISPLAY_TEXT}
+              Eleven Seven
             </span>
             <span className="hidden font-mono text-[10px] text-ink-soft sm:block">
-              {DISPLAY_TEXT}
+              ~/upgrades --under-a-dollar
             </span>
           </span>
         </Link>
@@ -50,7 +48,7 @@ export function Header() {
           ))}
           <Link
             href="/cart"
-            aria-label={DISPLAY_TEXT}
+            aria-label={`Cart, ${count} items`}
             className={`tactile relative ml-1 flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-semibold shadow-card ${
               pathname.startsWith("/cart")
                 ? "bg-blue text-white"
@@ -58,7 +56,7 @@ export function Header() {
             }`}
           >
             <span aria-hidden>🛒</span>
-            <span className="hidden sm:inline">{DISPLAY_TEXT}</span>
+            <span className="hidden sm:inline">Cart</span>
             {ready && count > 0 && (
               <span className="grid min-w-5 place-items-center rounded-full bg-mint px-1 font-mono text-[11px] font-bold text-ink">
                 {count}

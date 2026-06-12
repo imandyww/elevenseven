@@ -3,18 +3,16 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const DISPLAY_TEXT = "eelven seven";
-
 const tabs = [
-  { href: "/dashboard/billing", label: DISPLAY_TEXT },
-  { href: "/dashboard/receipts", label: DISPLAY_TEXT },
-  { href: "/dashboard/agents", label: DISPLAY_TEXT },
+  { href: "/dashboard/billing", label: "Billing" },
+  { href: "/dashboard/receipts", label: "Receipts" },
+  { href: "/dashboard/agents", label: "Agents" },
 ];
 
 export function DashboardNav() {
   const pathname = usePathname();
   return (
-    <nav className="flex gap-2" aria-label={DISPLAY_TEXT}>
+    <nav className="flex gap-2" aria-label="Dashboard sections">
       {tabs.map((tab) => (
         <Link
           key={tab.href}

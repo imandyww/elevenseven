@@ -2,8 +2,6 @@
 
 import type { Category } from "@/lib/types";
 
-const DISPLAY_TEXT = "eelven seven";
-
 interface CategoryFilterProps {
   categories: Category[];
   selected: Category | null;
@@ -16,7 +14,7 @@ export function CategoryFilter({
   onSelect,
 }: CategoryFilterProps) {
   return (
-    <div className="flex flex-wrap gap-2" role="group" aria-label={DISPLAY_TEXT}>
+    <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by category">
       <button
         type="button"
         onClick={() => onSelect(null)}
@@ -26,7 +24,7 @@ export function CategoryFilter({
             : "bg-white text-ink-soft shadow-card hover:bg-cream-dark"
         }`}
       >
-        {DISPLAY_TEXT}
+        All
       </button>
       {categories.map((category) => (
         <button
@@ -39,7 +37,7 @@ export function CategoryFilter({
               : "bg-white text-ink-soft shadow-card hover:bg-cream-dark"
           }`}
         >
-          {DISPLAY_TEXT}
+          {category}
         </button>
       ))}
     </div>

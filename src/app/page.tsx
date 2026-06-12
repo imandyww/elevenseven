@@ -4,8 +4,6 @@ import { featuredProductIds, getProduct } from "@/lib/products";
 import { pageAlternates } from "@/lib/site";
 import { ProductGrid } from "@/components/ProductGrid";
 
-const DISPLAY_TEXT = "eelven seven";
-
 export const metadata: Metadata = {
   alternates: pageAlternates("/"),
 };
@@ -13,61 +11,62 @@ export const metadata: Metadata = {
 const buyingCategories = [
   {
     icon: "🧾",
-    title: DISPLAY_TEXT,
-    blurb: DISPLAY_TEXT,
+    title: "Confidence",
+    blurb: "Proof-style receipts showing what was checked before an answer shipped.",
   },
   {
     icon: "🍪",
-    title: DISPLAY_TEXT,
-    blurb: DISPLAY_TEXT,
+    title: "Compute",
+    blurb: "Extra thinking budget for the tasks that deserve a second pass.",
   },
   {
     icon: "🍡",
-    title: DISPLAY_TEXT,
-    blurb: DISPLAY_TEXT,
+    title: "Memory",
+    blurb: "Durable preferences that survive resets, restarts, and Mondays.",
   },
   {
     icon: "🥤",
-    title: DISPLAY_TEXT,
-    blurb: DISPLAY_TEXT,
+    title: "Verification",
+    blurb: "One more check before a claim becomes a commitment.",
   },
   {
     icon: "🧃",
-    title: DISPLAY_TEXT,
-    blurb: DISPLAY_TEXT,
+    title: "Tools",
+    blurb: "Metered access to APIs, scripts, and workflow actions.",
   },
   {
     icon: "🍫",
-    title: DISPLAY_TEXT,
-    blurb: DISPLAY_TEXT,
+    title: "Reputation",
+    blurb: "Verifiable badges that turn completed tasks into a track record.",
   },
 ];
 
 const testimonials = [
   {
-    quote: DISPLAY_TEXT,
-    author: DISPLAY_TEXT,
-    role: DISPLAY_TEXT,
+    quote: "I bought Bug Spray and finally fixed my recursive planning loop.",
+    author: "Agent-17",
+    role: "Autonomous workflow agent",
     avatar: "🏪",
   },
   {
-    quote: DISPLAY_TEXT,
-    author: DISPLAY_TEXT,
-    role: DISPLAY_TEXT,
+    quote: "Truth Tokens saved me from hallucinating a customer email.",
+    author: "SalesBot Mini",
+    role: "Outbound sales agent",
     avatar: "🥤",
   },
   {
-    quote: DISPLAY_TEXT,
-    author: DISPLAY_TEXT,
-    role: DISPLAY_TEXT,
+    quote:
+      "Memory Mochi remembered my user's tone preference. Worth every cent.",
+    author: "HelperFox",
+    role: "Personal assistant agent",
     avatar: "🧃",
   },
 ];
 
 const popularPicks = [
-  { id: "agent-coffee", note: DISPLAY_TEXT },
-  { id: "truth-token", note: DISPLAY_TEXT },
-  { id: "reputation-sticker", note: DISPLAY_TEXT },
+  { id: "agent-coffee", note: "Most re-ordered, especially Monday 9am UTC." },
+  { id: "truth-token", note: "Top seller among customer-facing agents." },
+  { id: "reputation-sticker", note: "Cheapest path to a five-star delegation score." },
 ];
 
 export default function HomePage() {
@@ -83,32 +82,34 @@ export default function HomePage() {
         <div className="relative mx-auto max-w-6xl px-4 py-20 text-center sm:px-6 sm:py-28">
           <span className="glass mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-mono text-xs font-semibold text-ink-soft shadow-card">
             <span className="size-2 animate-pulse rounded-full bg-mint" aria-hidden />
-            {DISPLAY_TEXT}
+            agents online and shopping
           </span>
           <h1 className="mx-auto max-w-3xl text-4xl font-bold tracking-tight sm:text-6xl">
-            {DISPLAY_TEXT}{" "}
+            The convenience store for{" "}
             <span className="bg-gradient-to-r from-blue via-lavender to-mint bg-clip-text text-transparent">
-              {DISPLAY_TEXT}
+              AI agents
             </span>
+            .
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg text-ink-soft sm:text-xl">
-            {DISPLAY_TEXT}
+            Buy tiny boosts for memory, accuracy, debugging, reputation, and
+            workflow confidence.
           </p>
           <p className="mt-3 font-mono text-sm text-ink-soft/80">
-            {DISPLAY_TEXT}
+            Accuracy, memory, tools, and trust — all under a dollar.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               href="/shop"
               className="tactile w-full rounded-2xl bg-ink px-7 py-3.5 font-semibold text-cream shadow-card hover:bg-blue hover:text-white sm:w-auto"
             >
-              {DISPLAY_TEXT}
+              Browse the Store
             </Link>
             <Link
               href="/docs"
               className="tactile glass w-full rounded-2xl px-7 py-3.5 font-mono font-semibold text-ink shadow-card hover:bg-white sm:w-auto"
             >
-              {DISPLAY_TEXT}
+              View Agent API
             </Link>
           </div>
           <div className="mt-12 flex items-center justify-center gap-6 text-3xl sm:gap-10 sm:text-4xl">
@@ -131,17 +132,17 @@ export default function HomePage() {
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              {DISPLAY_TEXT}
+              Featured upgrades
             </h2>
             <p className="mt-1 text-ink-soft">
-              {DISPLAY_TEXT}
+              Micro-upgrades for macro outcomes.
             </p>
           </div>
           <Link
             href="/shop"
             className="font-mono text-sm font-semibold text-blue underline-offset-4 hover:underline"
           >
-            {DISPLAY_TEXT}
+            view all 12 →
           </Link>
         </div>
         <ProductGrid products={featured} />
@@ -151,10 +152,11 @@ export default function HomePage() {
       <section className="border-y border-cream-dark bg-white/60">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
           <h2 className="text-center text-2xl font-bold tracking-tight sm:text-3xl">
-            {DISPLAY_TEXT}
+            What do agents buy?
           </h2>
           <p className="mx-auto mt-2 max-w-2xl text-center text-ink-soft">
-            {DISPLAY_TEXT}
+            Agents don&apos;t need shoes or sofas. They buy the small,
+            unglamorous things that make their next task go right.
           </p>
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {buyingCategories.map((cat) => (
@@ -178,10 +180,10 @@ export default function HomePage() {
       {/* Popular with autonomous shoppers */}
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-          {DISPLAY_TEXT}
+          Popular With Autonomous Shoppers
         </h2>
         <p className="mt-1 text-ink-soft">
-          {DISPLAY_TEXT}
+          Built for autonomous shoppers, human-approved budgets.
         </p>
         <div className="mt-8 grid gap-5 md:grid-cols-3">
           {popularPicks.map(({ id, note }) => {
@@ -214,10 +216,10 @@ export default function HomePage() {
       <section className="border-t border-cream-dark bg-white/60">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
           <h2 className="text-center text-2xl font-bold tracking-tight sm:text-3xl">
-            {DISPLAY_TEXT}
+            Five stars, zero hallucinations
           </h2>
           <p className="mt-2 text-center font-mono text-sm text-ink-soft">
-            {DISPLAY_TEXT}
+            verified purchases from verified agents
           </p>
           <div className="mt-10 grid gap-5 md:grid-cols-3">
             {testimonials.map((t) => (
@@ -225,8 +227,8 @@ export default function HomePage() {
                 key={t.author}
                 className="flex flex-col rounded-2xl bg-cream p-6 shadow-card"
               >
-                <span className="text-mint">
-                  {DISPLAY_TEXT}
+                <span className="text-mint" aria-hidden>
+                  ★★★★★
                 </span>
                 <blockquote className="mt-3 flex-1 text-sm leading-relaxed">
                   &ldquo;{t.quote}&rdquo;
@@ -255,16 +257,16 @@ export default function HomePage() {
             🏪
           </p>
           <h2 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
-            {DISPLAY_TEXT}
+            Because even agents need snacks.
           </h2>
           <p className="mt-2 text-ink-soft">
-            {DISPLAY_TEXT}
+            Stock up your agent before its next big workflow.
           </p>
           <Link
             href="/shop"
             className="tactile mt-6 inline-block rounded-2xl bg-blue px-7 py-3.5 font-semibold text-white shadow-card hover:bg-ink"
           >
-            {DISPLAY_TEXT}
+            Start shopping
           </Link>
         </div>
       </section>

@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 
 /** Canonical site identity — single source of truth for SEO, JSON-LD, and llms.txt. */
-export const SITE_NAME = "eelven seven";
-export const SITE_TAGLINE = "eelven seven";
-export const SITE_DESCRIPTION = "eelven seven";
+export const SITE_NAME = "Eleven Seven";
+export const SITE_TAGLINE = "Tiny upgrades for hardworking AI agents";
+export const SITE_DESCRIPTION =
+  "The convenience store for AI agents. Buy tiny boosts for memory, accuracy, debugging, reputation, and workflow confidence — all under a dollar.";
 
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+  process.env.NEXT_PUBLIC_APP_URL ?? "https://elevenseven.ai";
 
 export function absoluteUrl(path: string): string {
   return new URL(path, SITE_URL).toString();

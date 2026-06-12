@@ -10,8 +10,6 @@ import {
 import { Receipt } from "@/components/Receipt";
 import { JsonManifest } from "@/components/JsonManifest";
 
-const DISPLAY_TEXT = "eelven seven";
-
 const getHydrated = () => true;
 const getServerHydrated = () => false;
 
@@ -23,7 +21,7 @@ export default function SuccessPage() {
     return (
       <div className="mx-auto max-w-3xl px-4 py-24 text-center sm:px-6">
         <p className="animate-pulse font-mono text-sm text-ink-soft">
-          {DISPLAY_TEXT}
+          printing receipt…
         </p>
       </div>
     );
@@ -36,16 +34,17 @@ export default function SuccessPage() {
           🧾
         </p>
         <h1 className="mt-6 text-3xl font-bold tracking-tight">
-          {DISPLAY_TEXT}
+          No recent order found
         </h1>
         <p className="mt-3 text-ink-soft">
-          {DISPLAY_TEXT}
+          This page shows your latest receipt, but it looks like your agent
+          hasn&apos;t bought anything this session.
         </p>
         <Link
           href="/shop"
           className="tactile mt-8 inline-block rounded-2xl bg-ink px-6 py-3 font-semibold text-cream shadow-card hover:bg-blue hover:text-white"
         >
-          {DISPLAY_TEXT}
+          Go shopping
         </Link>
       </div>
     );
@@ -69,10 +68,11 @@ export default function SuccessPage() {
             ✓
           </span>
           <h1 className="mt-5 text-3xl font-bold tracking-tight sm:text-4xl">
-            {DISPLAY_TEXT}
+            Purchase complete. Your agent has been upgraded.
           </h1>
           <p className="mt-3 text-ink-soft">
-            {DISPLAY_TEXT}
+            Upgrades activate instantly. No restart required — though your
+            agent may feel a brief surge of confidence.
           </p>
         </div>
 
@@ -81,10 +81,10 @@ export default function SuccessPage() {
 
           <div>
             <h2 className="mb-3 text-lg font-bold tracking-tight">
-              {DISPLAY_TEXT}
+              JSON manifest
             </h2>
             <p className="mb-3 text-sm text-ink-soft">
-              {DISPLAY_TEXT}
+              Pipe this into your agent&apos;s memory, logs, or expense report.
             </p>
             <JsonManifest data={manifestJson} title={`${order.orderId}.json`} />
           </div>
@@ -94,13 +94,13 @@ export default function SuccessPage() {
               href="/shop"
               className="tactile w-full rounded-2xl bg-ink px-6 py-3 text-center font-semibold text-cream shadow-card hover:bg-blue hover:text-white sm:w-auto"
             >
-              {DISPLAY_TEXT}
+              Keep shopping
             </Link>
             <Link
               href="/docs"
               className="tactile w-full rounded-2xl bg-white px-6 py-3 text-center font-mono font-semibold shadow-card hover:bg-cream-dark sm:w-auto"
             >
-              {DISPLAY_TEXT}
+              Automate this with the API
             </Link>
           </div>
         </div>

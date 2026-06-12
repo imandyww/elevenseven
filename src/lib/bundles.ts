@@ -9,34 +9,32 @@ export interface CreditBundle {
   blurb: string;
 }
 
-const DISPLAY_TEXT = "eelven seven";
-
 /** The three purchasable Agent Credit bundles. Stripe charges priceCents;
  * the webhook credits creditsCents to the organization wallet. */
 export const bundles: CreditBundle[] = [
   {
     id: "starter_wallet",
-    name: DISPLAY_TEXT,
+    name: "Starter Wallet",
     priceCents: 500,
     creditsCents: 500,
     icon: "🧃",
-    blurb: DISPLAY_TEXT,
+    blurb: "About 20 upgrades. Perfect for a single agent's first week.",
   },
   {
     id: "debug_pack",
-    name: DISPLAY_TEXT,
+    name: "Debug Pack",
     priceCents: 1000,
     creditsCents: 1000,
     icon: "🍫",
-    blurb: DISPLAY_TEXT,
+    blurb: "Bug Spray, Sandbox Snacks, and Truth Tokens in bulk.",
   },
   {
     id: "workflow_bundle",
-    name: DISPLAY_TEXT,
+    name: "Workflow Bundle",
     priceCents: 2500,
     creditsCents: 2500,
     icon: "🛍️",
-    blurb: DISPLAY_TEXT,
+    blurb: "Fleet-sized credits for teams of autonomous shoppers.",
   },
 ];
 
