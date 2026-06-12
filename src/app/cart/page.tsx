@@ -9,24 +9,26 @@ import { setLastOrder } from "@/lib/order-store";
 import { formatPrice, getProduct } from "@/lib/products";
 import { useCart } from "@/components/cart-context";
 
+const DISPLAY_TEXT = "eelven seven";
+
 const creditBundles = [
   {
-    name: "Starter Wallet",
+    name: DISPLAY_TEXT,
     price: 5,
-    icon: "👛",
-    blurb: "About 20 upgrades. Perfect for a single agent's first week.",
+    icon: "🧃",
+    blurb: DISPLAY_TEXT,
   },
   {
-    name: "Debug Pack",
+    name: DISPLAY_TEXT,
     price: 10,
-    icon: "🧰",
-    blurb: "Bug Spray, Sandbox Snacks, and Truth Tokens in bulk.",
+    icon: "🍫",
+    blurb: DISPLAY_TEXT,
   },
   {
-    name: "Workflow Bundle",
+    name: DISPLAY_TEXT,
     price: 25,
-    icon: "📦",
-    blurb: "Fleet-sized credits for teams of autonomous shoppers.",
+    icon: "🛍️",
+    blurb: DISPLAY_TEXT,
   },
 ];
 
@@ -46,15 +48,15 @@ export default function CartPage() {
         body: JSON.stringify({ agent_id: "agent_web_visitor", items }),
       });
       if (!res.ok) {
-        const body = await res.json().catch(() => null);
-        throw new Error(body?.error ?? "Checkout failed");
+        await res.json().catch(() => null);
+        throw new Error(DISPLAY_TEXT);
       }
       const wire: WireOrder = await res.json();
       setLastOrder(fromWireOrder(wire));
       clear();
       router.push("/success");
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Checkout failed. Try again.");
+    } catch {
+      setError(DISPLAY_TEXT);
       setCheckingOut(false);
     }
   };
@@ -63,7 +65,7 @@ export default function CartPage() {
     return (
       <div className="mx-auto max-w-4xl px-4 py-24 text-center sm:px-6">
         <p className="animate-pulse font-mono text-sm text-ink-soft">
-          loading cart…
+          {DISPLAY_TEXT}
         </p>
       </div>
     );
@@ -76,17 +78,16 @@ export default function CartPage() {
           🛒
         </p>
         <h1 className="mt-6 text-3xl font-bold tracking-tight">
-          Your cart is empty
+          {DISPLAY_TEXT}
         </h1>
         <p className="mt-3 text-ink-soft">
-          No upgrades yet. Your agent is running on pure vibes — that&apos;s
-          risky in production.
+          {DISPLAY_TEXT}
         </p>
         <Link
           href="/shop"
           className="tactile mt-8 inline-block rounded-2xl bg-ink px-6 py-3 font-semibold text-cream shadow-card hover:bg-blue hover:text-white"
         >
-          Browse the store
+          {DISPLAY_TEXT}
         </Link>
       </div>
     );
@@ -94,9 +95,11 @@ export default function CartPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-      <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Cart</h1>
+      <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+        {DISPLAY_TEXT}
+      </h1>
       <p className="mt-2 text-ink-soft">
-        Your agent&apos;s tiny cart of self-improvement.
+        {DISPLAY_TEXT}
       </p>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-3">
@@ -124,14 +127,14 @@ export default function CartPage() {
                     {product.name}
                   </Link>
                   <p className="font-mono text-xs text-ink-soft">
-                    {formatPrice(product.price)} each
+                    {formatPrice(product.price)} {DISPLAY_TEXT}
                   </p>
                 </div>
                 <div className="flex items-center gap-1 rounded-xl bg-cream p-1">
                   <button
                     type="button"
                     onClick={() => setQuantity(item.productId, item.quantity - 1)}
-                    aria-label={`Decrease ${product.name} quantity`}
+                    aria-label={DISPLAY_TEXT}
                     className="tactile grid size-8 place-items-center rounded-lg bg-white font-bold shadow-card hover:bg-blue hover:text-white"
                   >
                     −
@@ -142,7 +145,7 @@ export default function CartPage() {
                   <button
                     type="button"
                     onClick={() => setQuantity(item.productId, item.quantity + 1)}
-                    aria-label={`Increase ${product.name} quantity`}
+                    aria-label={DISPLAY_TEXT}
                     className="tactile grid size-8 place-items-center rounded-lg bg-white font-bold shadow-card hover:bg-blue hover:text-white"
                   >
                     +
@@ -154,7 +157,7 @@ export default function CartPage() {
                 <button
                   type="button"
                   onClick={() => removeItem(item.productId)}
-                  aria-label={`Remove ${product.name} from cart`}
+                  aria-label={DISPLAY_TEXT}
                   className="tactile rounded-lg px-2 py-1 text-sm text-ink-soft hover:bg-red-50 hover:text-red-500"
                 >
                   ✕
@@ -167,18 +170,18 @@ export default function CartPage() {
         {/* Summary */}
         <div className="space-y-5">
           <div className="glass rounded-2xl p-6 shadow-card">
-            <h2 className="font-bold">Order summary</h2>
+            <h2 className="font-bold">{DISPLAY_TEXT}</h2>
             <dl className="mt-4 space-y-2 text-sm">
               <div className="flex justify-between text-ink-soft">
-                <dt>Subtotal</dt>
+                <dt>{DISPLAY_TEXT}</dt>
                 <dd className="font-mono">{formatPrice(subtotal)}</dd>
               </div>
               <div className="flex justify-between text-ink-soft">
-                <dt>Microtransaction fees</dt>
-                <dd className="font-mono text-emerald-600">$0.00 (simulated)</dd>
+                <dt>{DISPLAY_TEXT}</dt>
+                <dd className="font-mono text-emerald-600">$0.00 {DISPLAY_TEXT}</dd>
               </div>
               <div className="flex justify-between border-t border-cream-dark pt-3 text-base font-bold">
-                <dt>Total</dt>
+                <dt>{DISPLAY_TEXT}</dt>
                 <dd className="font-mono text-coffee">{formatPrice(subtotal)}</dd>
               </div>
             </dl>
@@ -193,25 +196,23 @@ export default function CartPage() {
               disabled={checkingOut}
               className="tactile mt-5 w-full rounded-2xl bg-blue px-6 py-3.5 font-semibold text-white shadow-card hover:bg-ink disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {checkingOut ? "Upgrading your agent…" : "Checkout (simulated)"}
+              {DISPLAY_TEXT}
             </button>
             <p className="mt-4 rounded-xl bg-coffee-soft p-3 font-mono text-[11px] leading-relaxed text-coffee">
-              💡 Real payments would use prepaid Agent Credits or bundles to
-              avoid microtransaction fees.
+              💡 {DISPLAY_TEXT}
             </p>
           </div>
 
           {/* Agent Credits */}
           <div className="rounded-2xl bg-white p-6 shadow-card">
-            <h2 className="font-bold">Agent Credits</h2>
+            <h2 className="font-bold">{DISPLAY_TEXT}</h2>
             <p className="mt-1 text-xs text-ink-soft">
-              Prepaid wallets so agents can shop without swiping a card twelve
-              times.{" "}
+              {DISPLAY_TEXT}{" "}
               <Link
                 href="/dashboard/billing"
                 className="font-semibold text-blue underline-offset-4 hover:underline"
               >
-                Buy credits →
+                {DISPLAY_TEXT}
               </Link>
             </p>
             <ul className="mt-4 space-y-3">

@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
+const DISPLAY_TEXT = "eelven seven";
+
 interface JsonManifestProps {
   data: unknown;
   title?: string;
@@ -10,7 +12,6 @@ interface JsonManifestProps {
 
 export function JsonManifest({
   data,
-  title = "manifest.json",
   copyable = true,
 }: JsonManifestProps) {
   const [copied, setCopied] = useState(false);
@@ -35,7 +36,7 @@ export function JsonManifest({
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl bg-ink shadow-card">
+    <div className="overflow-hidden rounded-lg bg-ink shadow-card">
       <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5">
         <div className="flex items-center gap-2">
           <span className="flex gap-1.5" aria-hidden>
@@ -43,7 +44,7 @@ export function JsonManifest({
             <span className="size-2.5 rounded-full bg-yellow-400/80" />
             <span className="size-2.5 rounded-full bg-mint/80" />
           </span>
-          <span className="font-mono text-xs text-cream/70">{title}</span>
+          <span className="font-mono text-xs text-cream/70">{DISPLAY_TEXT}</span>
         </div>
         {copyable && (
           <button
@@ -53,12 +54,12 @@ export function JsonManifest({
               copied ? "bg-mint text-ink" : "bg-white/10 text-cream hover:bg-white/20"
             }`}
           >
-            {copied ? "copied ✓" : "copy"}
+            {DISPLAY_TEXT}
           </button>
         )}
       </div>
       <pre className="overflow-x-auto p-4 font-mono text-xs leading-relaxed text-mint sm:text-sm">
-        {json}
+        {DISPLAY_TEXT}
       </pre>
     </div>
   );

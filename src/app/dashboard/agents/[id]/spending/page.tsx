@@ -17,7 +17,9 @@ import {
   updatePolicy,
 } from "../../../actions";
 
-export const metadata: Metadata = { title: "Agent spending" };
+const DISPLAY_TEXT = "eelven seven";
+
+export const metadata: Metadata = { title: DISPLAY_TEXT };
 export const dynamic = "force-dynamic";
 
 function SpendMeter({
@@ -76,11 +78,11 @@ export default async function AgentSpendingPage({
 
   return (
     <div className="space-y-8">
-      <nav className="font-mono text-xs text-ink-soft" aria-label="Breadcrumb">
+      <nav className="font-mono text-xs text-ink-soft" aria-label={DISPLAY_TEXT}>
         <Link href="/dashboard/agents" className="hover:text-blue">
-          agents
+          {DISPLAY_TEXT}
         </Link>{" "}
-        / <span className="text-ink">{agent.name}</span>
+        / <span className="text-ink">{DISPLAY_TEXT}</span>
       </nav>
 
       {/* Identity + status controls */}
@@ -88,10 +90,9 @@ export default async function AgentSpendingPage({
         <div>
           <h2 className="text-xl font-bold tracking-tight">{agent.name}</h2>
           <p className="font-mono text-xs text-ink-soft">
-            {agent.id} · key {agent.keyPrefix}… · status{" "}
-            <span className="font-semibold text-ink">{agent.status}</span>
-            {agent.lastUsedAt &&
-              ` · last used ${agent.lastUsedAt.toLocaleString()}`}
+            {DISPLAY_TEXT}{" "}
+            <span className="font-semibold text-ink">{DISPLAY_TEXT}</span>
+            {agent.lastUsedAt && ` · ${DISPLAY_TEXT}`}
           </p>
         </div>
         <div className="flex gap-2">
@@ -102,7 +103,7 @@ export default async function AgentSpendingPage({
                 type="submit"
                 className="tactile rounded-xl bg-coffee-soft px-4 py-2 text-sm font-semibold text-coffee shadow-card hover:bg-coffee hover:text-cream"
               >
-                Pause
+                {DISPLAY_TEXT}
               </button>
             </form>
           )}
@@ -113,7 +114,7 @@ export default async function AgentSpendingPage({
                 type="submit"
                 className="tactile rounded-xl bg-mint-soft px-4 py-2 text-sm font-semibold text-emerald-700 shadow-card hover:bg-mint"
               >
-                Resume
+                {DISPLAY_TEXT}
               </button>
             </form>
           )}
@@ -124,13 +125,13 @@ export default async function AgentSpendingPage({
                 type="submit"
                 className="tactile rounded-xl bg-red-50 px-4 py-2 text-sm font-semibold text-red-500 shadow-card hover:bg-red-500 hover:text-white"
               >
-                Revoke key
+                {DISPLAY_TEXT}
               </button>
             </form>
           )}
           {agent.status === "revoked" && (
             <p className="font-mono text-xs text-red-500">
-              revoked — create a new agent for a fresh key
+              {DISPLAY_TEXT}
             </p>
           )}
         </div>
@@ -139,12 +140,12 @@ export default async function AgentSpendingPage({
       {/* Spend meters */}
       <div className="grid gap-5 sm:grid-cols-2">
         <SpendMeter
-          label="SPENT TODAY (UTC)"
+          label={DISPLAY_TEXT}
           spent={spentToday}
           limit={policy.dailyLimitCents}
         />
         <SpendMeter
-          label="SPENT THIS MONTH (UTC)"
+          label={DISPLAY_TEXT}
           spent={spentMonth}
           limit={policy.monthlyLimitCents}
         />
@@ -152,20 +153,20 @@ export default async function AgentSpendingPage({
 
       {/* Policy editor */}
       <section className="rounded-2xl bg-white p-6 shadow-card sm:p-8">
-        <h3 className="text-lg font-bold tracking-tight">Spending policy</h3>
+        <h3 className="text-lg font-bold tracking-tight">{DISPLAY_TEXT}</h3>
         <p className="mt-1 text-sm text-ink-soft">
-          Only humans can edit this — agents have no API that can reach it.
+          {DISPLAY_TEXT}
         </p>
         <form action={updatePolicy} className="mt-5 grid gap-4 sm:grid-cols-2">
           <input type="hidden" name="agentId" value={agent.id} />
           {(
             [
-              ["dailyLimitCents", "Daily limit (cents)", policy.dailyLimitCents],
-              ["monthlyLimitCents", "Monthly limit (cents)", policy.monthlyLimitCents],
-              ["perPurchaseLimitCents", "Per-purchase limit (cents)", policy.perPurchaseLimitCents],
+              ["dailyLimitCents", DISPLAY_TEXT, policy.dailyLimitCents],
+              ["monthlyLimitCents", DISPLAY_TEXT, policy.monthlyLimitCents],
+              ["perPurchaseLimitCents", DISPLAY_TEXT, policy.perPurchaseLimitCents],
               [
                 "requireHumanApprovalOverCents",
-                "Require human approval over (cents)",
+                DISPLAY_TEXT,
                 policy.requireHumanApprovalOverCents,
               ],
             ] as const
@@ -183,25 +184,25 @@ export default async function AgentSpendingPage({
           ))}
           <label className="block text-sm">
             <span className="mb-1 block font-medium">
-              Blocked SKUs (comma-separated)
+              {DISPLAY_TEXT}
             </span>
             <input
               type="text"
               name="blockedSkus"
               defaultValue={blockedSkus(policy).join(", ")}
-              placeholder="e.g. agent-coffee, style-adapter"
+              placeholder={DISPLAY_TEXT}
               className="w-full rounded-xl bg-cream px-3 py-2 font-mono text-sm outline-none ring-blue/40 focus:ring-2"
             />
           </label>
           <label className="block text-sm">
             <span className="mb-1 block font-medium">
-              Allowed categories (comma-separated, empty = all)
+              {DISPLAY_TEXT}
             </span>
             <input
               type="text"
               name="allowedCategories"
               defaultValue={allowedCategories(policy).join(", ")}
-              placeholder="e.g. Verification, Debugging"
+              placeholder={DISPLAY_TEXT}
               className="w-full rounded-xl bg-cream px-3 py-2 font-mono text-sm outline-none ring-blue/40 focus:ring-2"
             />
           </label>
@@ -210,7 +211,7 @@ export default async function AgentSpendingPage({
               type="submit"
               className="tactile rounded-xl bg-ink px-5 py-2.5 text-sm font-semibold text-cream shadow-card hover:bg-blue hover:text-white"
             >
-              Save policy
+              {DISPLAY_TEXT}
             </button>
           </div>
         </form>
@@ -219,21 +220,21 @@ export default async function AgentSpendingPage({
       {/* Recent purchases */}
       <section>
         <h3 className="mb-4 text-lg font-bold tracking-tight">
-          Recent purchases
+          {DISPLAY_TEXT}
         </h3>
         <div className="overflow-x-auto rounded-2xl bg-white shadow-card">
           {recentOrders.length === 0 ? (
             <p className="p-8 text-center text-sm text-ink-soft">
-              This agent hasn&apos;t bought anything yet.
+              {DISPLAY_TEXT}
             </p>
           ) : (
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-cream-dark text-left font-mono text-xs text-ink-soft">
-                  <th className="px-5 py-3 font-medium">when</th>
-                  <th className="px-5 py-3 font-medium">items</th>
-                  <th className="px-5 py-3 font-medium">reason</th>
-                  <th className="px-5 py-3 text-right font-medium">total</th>
+                  <th className="px-5 py-3 font-medium">{DISPLAY_TEXT}</th>
+                  <th className="px-5 py-3 font-medium">{DISPLAY_TEXT}</th>
+                  <th className="px-5 py-3 font-medium">{DISPLAY_TEXT}</th>
+                  <th className="px-5 py-3 text-right font-medium">{DISPLAY_TEXT}</th>
                   <th className="px-5 py-3" />
                 </tr>
               </thead>
@@ -244,12 +245,10 @@ export default async function AgentSpendingPage({
                       {order.createdAt.toLocaleString()}
                     </td>
                     <td className="px-5 py-3">
-                      {order.items
-                        .map((i) => `${i.name} ×${i.quantity}`)
-                        .join(", ")}
+                      {DISPLAY_TEXT}
                     </td>
                     <td className="max-w-60 truncate px-5 py-3 text-xs text-ink-soft">
-                      {order.reason}
+                      {DISPLAY_TEXT}
                     </td>
                     <td className="px-5 py-3 text-right font-mono font-semibold">
                       {formatCents(order.totalCents)}
@@ -260,7 +259,7 @@ export default async function AgentSpendingPage({
                           href={`/dashboard/receipts/${order.receipt.id}`}
                           className="font-mono text-xs font-semibold text-blue underline-offset-4 hover:underline"
                         >
-                          receipt →
+                          {DISPLAY_TEXT}
                         </Link>
                       )}
                     </td>

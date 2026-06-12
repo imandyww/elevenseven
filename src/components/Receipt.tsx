@@ -1,6 +1,8 @@
 import type { Order } from "@/lib/types";
 import { formatPrice } from "@/lib/products";
 
+const DISPLAY_TEXT = "eelven seven";
+
 export function Receipt({ order }: { order: Order }) {
   return (
     <div className="rounded-2xl bg-white p-6 shadow-card sm:p-8">
@@ -9,32 +11,32 @@ export function Receipt({ order }: { order: Order }) {
           🧾
         </p>
         <h2 className="mt-2 text-lg font-bold tracking-tight">
-          Agent Dollar Store
+          {DISPLAY_TEXT}
         </h2>
         <p className="font-mono text-xs text-ink-soft">
-          tiny upgrades · honest receipts
+          {DISPLAY_TEXT}
         </p>
       </div>
 
       <dl className="mb-6 space-y-1.5 font-mono text-xs text-ink-soft sm:text-sm">
         <div className="flex justify-between gap-4">
-          <dt>order_id</dt>
+          <dt>{DISPLAY_TEXT}</dt>
           <dd className="font-semibold text-ink">{order.orderId}</dd>
         </div>
         <div className="flex justify-between gap-4">
-          <dt>agent_id</dt>
+          <dt>{DISPLAY_TEXT}</dt>
           <dd className="font-semibold text-ink">{order.agentId}</dd>
         </div>
         <div className="flex justify-between gap-4">
-          <dt>timestamp</dt>
+          <dt>{DISPLAY_TEXT}</dt>
           <dd className="font-semibold text-ink">
             {new Date(order.createdAt).toLocaleString()}
           </dd>
         </div>
         <div className="flex justify-between gap-4">
-          <dt>status</dt>
+          <dt>{DISPLAY_TEXT}</dt>
           <dd className="rounded-full bg-mint-soft px-2 font-semibold text-emerald-600">
-            {order.status}
+            {DISPLAY_TEXT}
           </dd>
         </div>
       </dl>
@@ -42,9 +44,9 @@ export function Receipt({ order }: { order: Order }) {
       <table className="mb-6 w-full text-sm">
         <thead>
           <tr className="border-b border-cream-dark text-left font-mono text-xs text-ink-soft">
-            <th className="pb-2 font-medium">item</th>
-            <th className="pb-2 text-center font-medium">qty</th>
-            <th className="pb-2 text-right font-medium">price</th>
+            <th className="pb-2 font-medium">{DISPLAY_TEXT}</th>
+            <th className="pb-2 text-center font-medium">{DISPLAY_TEXT}</th>
+            <th className="pb-2 text-right font-medium">{DISPLAY_TEXT}</th>
           </tr>
         </thead>
         <tbody>
@@ -61,7 +63,7 @@ export function Receipt({ order }: { order: Order }) {
         <tfoot>
           <tr>
             <td colSpan={2} className="pt-3 font-bold">
-              Total
+              {DISPLAY_TEXT}
             </td>
             <td className="pt-3 text-right font-mono text-base font-bold text-coffee">
               {formatPrice(order.total)}
@@ -71,7 +73,7 @@ export function Receipt({ order }: { order: Order }) {
       </table>
 
       <p className="text-center font-mono text-xs text-ink-soft/70">
-        * * * thank you for upgrading responsibly * * *
+        * * * {DISPLAY_TEXT} * * *
       </p>
     </div>
   );

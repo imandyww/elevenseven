@@ -1,19 +1,19 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand palette */
-  --color-cream: #faf7f2;
-  --color-cream-dark: #f1ece3;
-  --color-ink: #211d19;
-  --color-ink-soft: #4a443d;
-  --color-blue: #2e5bff;
-  --color-blue-soft: #e6ecff;
-  --color-mint: #54d6ae;
-  --color-mint-soft: #e2f8f0;
-  --color-lavender: #a78bfa;
-  --color-lavender-soft: #f0ebfe;
-  --color-coffee: #6f4e37;
-  --color-coffee-soft: #f3ece6;
+  /* Convenience-store palette */
+  --color-cream: #fff8e7;
+  --color-cream-dark: #f2dfb8;
+  --color-ink: #202320;
+  --color-ink-soft: #4f5b4f;
+  --color-blue: #007a3d;
+  --color-blue-soft: #dff4e8;
+  --color-mint: #ffd233;
+  --color-mint-soft: #fff5bd;
+  --color-lavender: #e22b2f;
+  --color-lavender-soft: #ffe1df;
+  --color-coffee: #8d3b18;
+  --color-coffee-soft: #ffe9c7;
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -35,7 +35,11 @@
 }
 
 body {
-  background-color: var(--color-cream);
+  background:
+    linear-gradient(90deg, rgb(255 255 255 / 0.55) 1px, transparent 1px),
+    linear-gradient(rgb(255 255 255 / 0.55) 1px, transparent 1px),
+    var(--color-cream);
+  background-size: 28px 28px;
   color: var(--color-ink);
   font-family: var(--font-sans), system-ui, sans-serif;
 }
@@ -47,24 +51,31 @@ body {
 
 /* Glassy panel used across the site */
 .glass {
-  background: rgb(255 255 255 / 0.65);
+  background: rgb(255 255 255 / 0.82);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgb(255 255 255 / 0.7);
+  border: 1px solid rgb(0 122 61 / 0.14);
 }
 
-/* Soft multi-stop brand gradient backdrop */
+/* Fluorescent convenience-store awning backdrop */
 .hero-gradient {
   background:
-    radial-gradient(ellipse 60% 50% at 20% 0%, rgb(46 91 255 / 0.1), transparent),
-    radial-gradient(ellipse 50% 40% at 80% 10%, rgb(167 139 250 / 0.14), transparent),
-    radial-gradient(ellipse 50% 40% at 50% 100%, rgb(84 214 174 / 0.12), transparent);
+    repeating-linear-gradient(
+      90deg,
+      rgb(226 43 47 / 0.18) 0 42px,
+      rgb(255 255 255 / 0.38) 42px 84px,
+      rgb(0 122 61 / 0.18) 84px 126px,
+      rgb(255 210 51 / 0.26) 126px 168px
+    ),
+    linear-gradient(180deg, #fffdf4 0%, #fff4ce 52%, #e6f7e8 100%);
 }
 
-/* Dotted pixel-grid accent */
+/* Pegboard and tile accent */
 .pixel-grid {
-  background-image: radial-gradient(rgb(33 29 25 / 0.07) 1px, transparent 1px);
-  background-size: 18px 18px;
+  background-image:
+    radial-gradient(rgb(32 35 32 / 0.1) 1px, transparent 1px),
+    linear-gradient(rgb(0 122 61 / 0.08) 1px, transparent 1px);
+  background-size: 16px 16px, 48px 48px;
 }
 
 /* Tactile button press */

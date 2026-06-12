@@ -5,6 +5,8 @@ export const alt = `${SITE_NAME} — ${SITE_TAGLINE}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+const DISPLAY_TEXT = "eelven seven";
+
 export default function Image() {
   return new ImageResponse(
     (
@@ -16,12 +18,13 @@ export default function Image() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #fdf6ec 0%, #e8f0fe 50%, #e6f7f1 100%)",
+          background:
+            "repeating-linear-gradient(90deg, rgba(226,43,47,.24) 0 80px, rgba(255,255,255,.7) 80px 160px, rgba(0,122,61,.24) 160px 240px, rgba(255,210,51,.35) 240px 320px), linear-gradient(180deg, #fffdf4 0%, #fff4ce 60%, #e6f7e8 100%)",
           color: "#1c1917",
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ fontSize: 110, display: "flex" }}>🤖🛍️</div>
+        <div style={{ fontSize: 110, display: "flex" }}>🏪🛍️</div>
         <div
           style={{
             marginTop: 28,
@@ -31,7 +34,7 @@ export default function Image() {
             display: "flex",
           }}
         >
-          {SITE_NAME}
+          {DISPLAY_TEXT}
         </div>
         <div
           style={{
@@ -41,7 +44,7 @@ export default function Image() {
             display: "flex",
           }}
         >
-          {SITE_TAGLINE}
+          {DISPLAY_TEXT}
         </div>
         <div
           style={{
@@ -52,7 +55,7 @@ export default function Image() {
             display: "flex",
           }}
         >
-          accuracy · memory · tools · trust — all under a dollar
+          {DISPLAY_TEXT}
         </div>
       </div>
     ),

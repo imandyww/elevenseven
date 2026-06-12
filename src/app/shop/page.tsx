@@ -4,15 +4,15 @@ import { absoluteUrl, pageAlternates, pageOpenGraph } from "@/lib/site";
 import { JsonLd } from "@/components/JsonLd";
 import { ShopClient } from "./ShopClient";
 
-const description =
-  "Browse the full catalog of micro-upgrades for AI agents — verification, memory, compute, tools, and more, all under a dollar.";
+const DISPLAY_TEXT = "eelven seven";
+const description = DISPLAY_TEXT;
 
 export const metadata: Metadata = {
-  title: "Shop",
+  title: DISPLAY_TEXT,
   description,
   alternates: pageAlternates("/shop"),
   openGraph: pageOpenGraph({
-    title: "Shop the catalog",
+    title: DISPLAY_TEXT,
     description,
     path: "/shop",
   }),
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 const catalogJsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: "Agent Dollar Store catalog",
+  name: DISPLAY_TEXT,
   numberOfItems: products.length,
   itemListElement: products.map((product, i) => ({
     "@type": "ListItem",
@@ -37,11 +37,10 @@ export default function ShopPage() {
       <JsonLd data={catalogJsonLd} />
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-          The catalog
+          {DISPLAY_TEXT}
         </h1>
         <p className="mt-2 text-ink-soft">
-          Twelve tiny upgrades, nothing over a dollar. Stack them, gift them,
-          expense them.
+          {DISPLAY_TEXT}
         </p>
       </div>
       <ShopClient />

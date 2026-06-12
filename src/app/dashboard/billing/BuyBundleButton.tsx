@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+const DISPLAY_TEXT = "eelven seven";
+
 export function BuyBundleButton({
   bundleId,
   organizationId,
@@ -23,11 +25,11 @@ export function BuyBundleButton({
       });
       const data = await res.json();
       if (!res.ok || !data.url) {
-        throw new Error(data?.error?.message ?? "Could not start checkout.");
+        throw new Error(DISPLAY_TEXT);
       }
       window.location.href = data.url;
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Could not start checkout.");
+    } catch {
+      setError(DISPLAY_TEXT);
       setLoading(false);
     }
   };
@@ -40,7 +42,7 @@ export function BuyBundleButton({
         disabled={loading}
         className="tactile w-full rounded-xl bg-ink px-4 py-2.5 text-sm font-semibold text-cream shadow-card hover:bg-blue hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {loading ? "Opening Stripe…" : "Buy with Stripe"}
+        {DISPLAY_TEXT}
       </button>
       {error && <p className="mt-2 text-xs text-red-600">{error}</p>}
     </div>

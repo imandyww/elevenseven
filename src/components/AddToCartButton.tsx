@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useCart } from "./cart-context";
 
+const DISPLAY_TEXT = "eelven seven";
+
 interface AddToCartButtonProps {
   productId: string;
   size?: "sm" | "lg";
@@ -41,7 +43,7 @@ export function AddToCartButton({ productId, size = "sm" }: AddToCartButtonProps
           : "bg-ink text-cream hover:bg-blue hover:text-white"
       }`}
     >
-      {added ? "Added ✓" : size === "lg" ? "Add to cart" : "Add"}
+      {DISPLAY_TEXT}
     </button>
   );
 }
