@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { pageAlternates } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
   description:
     "Why a dollar store for AI agents? Because the future of agent infrastructure is small, metered, and surprisingly cute.",
+  alternates: pageAlternates("/about"),
 };
 
 const principles = [

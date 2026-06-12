@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { formatPrice, getProduct, products } from "@/lib/products";
+import { absoluteUrl, pageAlternates, pageOpenGraph, SITE_NAME } from "@/lib/site";
 import { AddToCartButton } from "@/components/AddToCartButton";
 import { CategoryBadge } from "@/components/CategoryBadge";
+import { JsonLd } from "@/components/JsonLd";
 import { JsonManifest } from "@/components/JsonManifest";
 import { ProductCard } from "@/components/ProductCard";
 
@@ -21,9 +23,21 @@ export async function generateMetadata({
   const { id } = await params;
   const product = getProduct(id);
   if (!product) return { title: "Product not found" };
+  const title = `${product.name} — ${formatPrice(product.price)} ${product.category} upgrade for AI agents`;
   return {
     title: product.name,
     description: product.description,
+    alternates: pageAlternates(`/products/${product.id}`),
+    openGraph: pageOpenGraph({
+      title,
+      description: product.description,
+      path: `/products/${product.id}`,
+    }),
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: product.description,
+    },
   };
 }
 
@@ -44,8 +58,43 @@ export default async function ProductPage({ params }: ProductPageProps) {
     manifest: product.manifest,
   };
 
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    sku: product.sku,
+    description: product.longDescription,
+    category: product.category,
+    url: absoluteUrl(`/products/${product.id}`),
+    brand: { "@type": "Brand", name: SITE_NAME },
+    offers: {
+      "@type": "Offer",
+      price: product.price.toFixed(2),
+      priceCurrency: "USD",
+      availability: "https://schema.org/InStock",
+      url: absoluteUrl(`/products/${product.id}`),
+      seller: { "@id": absoluteUrl("/#organization") },
+    },
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Shop", item: absoluteUrl("/shop") },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: product.name,
+        item: absoluteUrl(`/products/${product.id}`),
+      },
+    ],
+  };
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+      <JsonLd data={productJsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
       <nav className="mb-6 font-mono text-xs text-ink-soft" aria-label="Breadcrumb">
         <Link href="/shop" className="hover:text-blue">
           shop

@@ -4,6 +4,7 @@ import { DashboardNav } from "./DashboardNav";
 
 export const metadata: Metadata = {
   title: { default: "Dashboard", template: "%s · Dashboard · Agent Dollar Store" },
+  robots: { index: false, follow: false },
 };
 
 export default function DashboardLayout({

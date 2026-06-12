@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { pageAlternates } from "@/lib/site";
 import { JsonManifest } from "@/components/JsonManifest";
 
 export const metadata: Metadata = {
   title: "Agent API",
   description:
     "Browse and buy micro-upgrades programmatically. JSON in, JSON out, receipts always.",
+  alternates: pageAlternates("/docs"),
 };
 
 const exampleOrder = {

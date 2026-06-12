@@ -57,6 +57,15 @@ export function Footer() {
                 GET /api/products
               </Link>
             </li>
+            <li>
+              <Link
+                href="/llms.txt"
+                prefetch={false}
+                className="font-mono text-xs hover:text-blue"
+              >
+                llms.txt
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

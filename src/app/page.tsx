@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { featuredProductIds, getProduct } from "@/lib/products";
+import { pageAlternates } from "@/lib/site";
 import { ProductGrid } from "@/components/ProductGrid";
+
+export const metadata: Metadata = {
+  alternates: pageAlternates("/"),
+};
 
 const buyingCategories = [
   {
