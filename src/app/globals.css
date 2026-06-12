@@ -1,26 +1,79 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* Brand palette */
+  --color-cream: #faf7f2;
+  --color-cream-dark: #f1ece3;
+  --color-ink: #211d19;
+  --color-ink-soft: #4a443d;
+  --color-blue: #2e5bff;
+  --color-blue-soft: #e6ecff;
+  --color-mint: #54d6ae;
+  --color-mint-soft: #e2f8f0;
+  --color-lavender: #a78bfa;
+  --color-lavender-soft: #f0ebfe;
+  --color-coffee: #6f4e37;
+  --color-coffee-soft: #f3ece6;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --shadow-card: 0 1px 2px rgb(33 29 25 / 0.04), 0 4px 16px rgb(33 29 25 / 0.06);
+  --shadow-card-hover: 0 2px 4px rgb(33 29 25 / 0.06), 0 12px 32px rgb(33 29 25 / 0.12);
+
+  --animate-float: float 5s ease-in-out infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background-color: var(--color-lavender);
+  color: var(--color-ink);
+}
+
+/* Glassy panel used across the site */
+.glass {
+  background: rgb(255 255 255 / 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgb(255 255 255 / 0.7);
+}
+
+/* Soft multi-stop brand gradient backdrop */
+.hero-gradient {
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 0%, rgb(46 91 255 / 0.1), transparent),
+    radial-gradient(ellipse 50% 40% at 80% 10%, rgb(167 139 250 / 0.14), transparent),
+    radial-gradient(ellipse 50% 40% at 50% 100%, rgb(84 214 174 / 0.12), transparent);
+}
+
+/* Dotted pixel-grid accent */
+.pixel-grid {
+  background-image: radial-gradient(rgb(33 29 25 / 0.07) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+/* Tactile button press */
+.tactile {
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background-color 120ms ease;
+}
+.tactile:active {
+  transform: translateY(1px) scale(0.98);
 }
