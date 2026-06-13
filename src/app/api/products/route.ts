@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
-import { products } from "@/lib/products";
+import { productCatalogPayload } from "@/lib/product-catalog";
 
 export function GET() {
+  const catalog = productCatalogPayload();
   return NextResponse.json({
-    count: products.length,
-    products,
+    ...catalog,
+    count: catalog.products.length,
   });
 }

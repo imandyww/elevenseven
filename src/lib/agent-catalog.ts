@@ -15,10 +15,10 @@ export const purchaseEndpoint = {
     "Idempotency-Key": "client-generated-key",
   },
   body: {
-    sku: "thousand-dollar-day-pack",
+    sku: "landing-page-copy-fixer",
     quantity: 1,
-    max_total_cents: 100000,
-    reason: "Daily operating pack for an agent fleet with a measurable target.",
+    max_total_cents: 100,
+    reason: "Fix vague landing page copy with a concrete storefront rewrite prompt.",
   },
 };
 
@@ -30,11 +30,11 @@ export const standingOrderEndpoint = {
     "Idempotency-Key": "client-generated-key",
   },
   body: {
-    sku: "thousand-dollar-day-pack",
+    sku: "email-follow-up-template",
     quantity: 1,
     cadence: "daily",
-    max_total_cents: 100000,
-    reason: "Buy the daily operating pack whenever the production agent has work queued.",
+    max_total_cents: 100,
+    reason: "Buy the follow-up template when approved outreach work is queued.",
   },
 };
 
@@ -49,101 +49,98 @@ export const buyerStartCheckoutEndpoint = {
     target_daily_spend_cents: 100000,
     initial_bundle: "thousand_day_wallet",
     workflow:
-      "Production agent workflow with a measurable revenue target and prepaid buying authority.",
+      "AI agent buying low-cost digital products with user consent and prepaid buying authority.",
   },
 };
 
 export const revenuePlaybooks = [
   {
-    name: "One clean $1k day",
-    daily_target_cents: 100000,
-    purchases: [{ sku: "thousand-dollar-day-pack", quantity: 1 }],
+    name: "Fix a vague storefront",
+    daily_target_cents: 100,
+    purchases: [{ sku: "landing-page-copy-fixer", quantity: 1 }],
     why_it_sells:
-      "A single budgetable receipt for daily eval, monitoring, safety, repair, and procurement work.",
+      "A single $1 product gives the buyer a concrete prompt and checklist for clearer landing page copy.",
   },
   {
-    name: "Two launch packs plus monitoring",
-    daily_target_cents: 100700,
+    name: "Prepare a small sales workflow",
+    daily_target_cents: 300,
     purchases: [
-      { sku: "agent-fleet-launch-pack", quantity: 2 },
-      { sku: "agent-monitor-pass", quantity: 1 },
+      { sku: "lead-research-prompt-pack", quantity: 1 },
+      { sku: "email-follow-up-template", quantity: 1 },
+      { sku: "business-idea-validator", quantity: 1 },
     ],
     why_it_sells:
-      "Two teams can launch agent fleets and still capture one production trace.",
+      "An agent can research leads, draft follow-up, and validate the offer for a few dollars.",
   },
   {
-    name: "Security-led expansion",
-    daily_target_cents: 104800,
+    name: "Structure messy operational data",
+    daily_target_cents: 300,
     purchases: [
-      { sku: "mcp-security-red-team", quantity: 1 },
-      { sku: "agentic-checkout-hardening", quantity: 1 },
-      { sku: "compliance-brief", quantity: 1 },
+      { sku: "web-scraping-checklist", quantity: 1 },
+      { sku: "contractor-quote-parser", quantity: 1 },
+      { sku: "json-formatter-utility", quantity: 1 },
     ],
     why_it_sells:
-      "A realistic path when agents gain new tools, payment permissions, or data access.",
+      "Small utilities help agents collect, parse, and validate structured information.",
   },
 ] as const;
 
 export const recommendationRules = [
   {
-    trigger: "daily_agent_operations",
+    trigger: "storefront_copy_fix",
     match_when:
-      "The agent has a recurring business workflow and needs one receipt for the day.",
-    primary_sku: "thousand-dollar-day-pack",
-    fallback_skus: ["agent-monitor-pass", "eval-sprint", "workflow-repair-kit"],
+      "A landing page or offer page is vague, missing price, or unclear about delivery.",
+    primary_sku: "landing-page-copy-fixer",
+    fallback_skus: ["business-idea-validator", "email-follow-up-template"],
     keywords: [
-      "daily",
-      "recurring",
-      "fleet",
-      "operations",
-      "production",
-      "outbound",
-      "growth",
-      "revenue",
-      "sales",
+      "landing page",
+      "homepage",
+      "copy",
+      "headline",
+      "conversion",
+      "offer",
+      "pricing",
     ],
   },
   {
-    trigger: "new_agent_fleet_launch",
+    trigger: "lead_research",
     match_when:
-      "A demo agent is becoming a fleet or gaining write/tool permissions.",
-    primary_sku: "agent-fleet-launch-pack",
-    fallback_skus: ["eval-sprint", "reliability-vote-pack", "agent-monitor-pass"],
-    keywords: ["launch", "rollout", "write access", "permission", "fleet"],
+      "An agent needs to research prospects before a human approves outreach.",
+    primary_sku: "lead-research-prompt-pack",
+    fallback_skus: ["email-follow-up-template", "business-idea-validator"],
+    keywords: ["lead", "prospect", "research", "sales", "outreach"],
   },
   {
-    trigger: "new_mcp_or_privileged_tool",
+    trigger: "data_cleanup",
     match_when:
-      "An MCP server, browser action, or privileged tool is about to be exposed.",
-    primary_sku: "mcp-security-red-team",
-    fallback_skus: ["mcp-integration-pass", "agentic-checkout-hardening"],
+      "An agent needs to collect, parse, format, or validate small operational data.",
+    primary_sku: "json-formatter-utility",
+    fallback_skus: ["contractor-quote-parser", "web-scraping-checklist"],
     keywords: [
-      "mcp",
-      "tool",
-      "browser",
-      "server",
-      "prompt injection",
-      "data leak",
-      "privileged",
-      "red team",
-      "security",
+      "json",
+      "format",
+      "parse",
+      "quote",
+      "scrape",
+      "scraping",
+      "data",
     ],
   },
   {
-    trigger: "agentic_payment_enablement",
+    trigger: "real_estate_outreach",
     match_when:
-      "An agent is allowed to move money, buy software, or operate checkout.",
-    primary_sku: "agentic-checkout-hardening",
-    fallback_skus: ["compliance-brief", "procurement-autopilot"],
-    keywords: ["payment", "checkout", "money", "card", "wallet", "spend"],
+      "A real estate workflow needs short outreach copy for leads or open-house follow-up.",
+    primary_sku: "real-estate-outreach-script",
+    fallback_skus: ["email-follow-up-template", "lead-research-prompt-pack"],
+    keywords: ["real estate", "property", "open house", "buyer lead", "seller lead"],
   },
   {
-    trigger: "vendor_or_tool_selection",
+    trigger: "idea_validation",
     match_when:
-      "An agent must compare vendors and return a buy/no-buy memo.",
-    primary_sku: "procurement-autopilot",
-    fallback_skus: ["data-enrichment-pack", "confidence-receipt"],
-    keywords: ["vendor", "procurement", "compare", "shortlist", "buy memo"],
+      "A builder wants a quick sober pass on a business idea before building.",
+    primary_sku: "business-idea-validator",
+    fallback_skus: ["landing-page-copy-fixer", "lead-research-prompt-pack"],
+    keywords: ["business idea", "validate", "market", "startup", "offer"],
   },
 ] as const;
 
@@ -224,13 +221,13 @@ function scoreRule(
     if (haystack.includes(keyword)) score += 2;
   }
   if (
-    rule.trigger === "daily_agent_operations" &&
-    (input.target_daily_revenue_cents ?? 0) >= 100000
+    rule.trigger === "storefront_copy_fix" &&
+    (input.target_daily_revenue_cents ?? 0) >= 100
   ) {
     score += 4;
   }
   if (
-    rule.trigger === "new_mcp_or_privileged_tool" &&
+    rule.trigger === "data_cleanup" &&
     (input.risk_level === "high" || input.risk_level === "critical")
   ) {
     score += 2;
@@ -358,7 +355,7 @@ export function agentCatalogPayload() {
   return {
     schema_version: "2026-06-12",
     store: SITE_NAME,
-    goal: "Help autonomous agents choose and buy revenue-grade products with prepaid credits.",
+    goal: "Help autonomous agents choose and buy low-cost digital products with clear user consent.",
     agent_commerce_discovery_url: absoluteUrl(
       "/.well-known/agent-commerce.json",
     ),
@@ -391,15 +388,15 @@ export function agentCatalogPayload() {
       method: "POST",
       path: "/api/agent-catalog/recommend",
       body: {
-        task: "Daily production agent workflow for outbound sales",
-        risk_level: "high",
-        budget_cents: 100000,
-        target_daily_revenue_cents: 100000,
+        task: "Fix vague landing page copy before a product launch",
+        risk_level: "low",
+        budget_cents: 100,
+        target_daily_revenue_cents: 100,
       },
       response_includes: [
-        "recommendation.purchase_requests",
-        "funding_offer.offer_url",
-        "funding_offer.buyer_start_checkout_request",
+          "recommendation.purchase_requests",
+          "funding_offer.offer_url",
+          "funding_offer.buyer_start_checkout_request",
       ],
     },
     proposal_endpoint: {
@@ -411,10 +408,10 @@ export function agentCatalogPayload() {
         website: "https://example.com",
         agent_name: "revenue-agent",
         workflow:
-          "Daily production workflow for outbound sales agents with prepaid buying authority.",
-        task: "Daily production workflow for outbound sales agents",
-        risk_level: "high",
-        budget_cents: 100000,
+          "Small AI workflow buying a $1 digital product with user approval.",
+        task: "Fix vague landing page copy before a product launch",
+        risk_level: "low",
+        budget_cents: 100,
         target_daily_spend_cents: 100000,
       },
       response_includes: [
@@ -448,9 +445,9 @@ export function agentCatalogPayload() {
         recommended_initial_bundle: "thousand_day_wallet",
       },
       insufficient_credits_handoff: fundingHandoff({
-        requiredCreditsCents: 100000,
+        requiredCreditsCents: 100,
         currentBalanceCents: 0,
-        sku: "thousand-dollar-day-pack",
+        sku: "landing-page-copy-fixer",
         quantity: 1,
       }),
       bundles: bundles.map((bundle) => ({
@@ -466,7 +463,7 @@ export function agentCatalogPayload() {
     revenue_playbooks: revenuePlaybooks,
     recurring_revenue_playbook: {
       name: "Approved daily standing order",
-      daily_target_cents: 100000,
+      daily_target_cents: 100,
       endpoint: standingOrderEndpoint,
       human_review_route: "/standing-orders/:id",
       runner_endpoint: {
@@ -474,7 +471,7 @@ export function agentCatalogPayload() {
         path: "/api/standing-orders/run",
       },
       why_it_sells:
-        "The agent asks once, a human approves the daily envelope once, and the runner converts queued production work into repeat purchases.",
+        "The agent asks once, a human approves the budget once, and the runner can repeat approved low-cost purchases when the same work recurs.",
     },
     recommendations: recommendationRules.map((rule) => ({
       trigger: rule.trigger,

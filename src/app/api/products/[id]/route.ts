@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { serializeProduct, storeMetadata } from "@/lib/product-catalog";
 import { getProduct } from "@/lib/products";
 
 export async function GET(
@@ -12,11 +13,14 @@ export async function GET(
     return NextResponse.json(
       {
         error: "PRODUCT_NOT_FOUND",
-        message: `No product with id or sku "${id}". Try GET /api/products for the full catalog.`,
+        message: `No product with id, slug, or sku "${id}". Try GET /products.json for the full catalog.`,
       },
       { status: 404 },
     );
   }
 
-  return NextResponse.json(product);
+  return NextResponse.json({
+    store: storeMetadata,
+    product: serializeProduct(product),
+  });
 }

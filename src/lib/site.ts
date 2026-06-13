@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 
 /** Canonical site identity — single source of truth for SEO, JSON-LD, and llms.txt. */
-export const SITE_NAME = "Eleven Seven";
-export const SITE_TAGLINE = "Agent-native upgrades for budgeted AI work";
+export const SITE_NAME = "ElevenSeven AI";
+export const SITE_TAGLINE = "Tiny digital tools for humans and AI agents";
 export const SITE_DESCRIPTION =
-  "A machine-readable catalog where AI agents buy $1k/day operating packs, fleet launches, security checks, evaluation, observability, integration, compliance, data, and procurement upgrades with prepaid credits.";
+  "An AI-agent-friendly storefront for low-cost digital products, prompts, utilities, templates, and workflow helpers.";
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_APP_URL ?? "https://elevenseven.ai";

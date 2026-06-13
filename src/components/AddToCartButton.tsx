@@ -6,9 +6,14 @@ import { useCart } from "./cart-context";
 interface AddToCartButtonProps {
   productId: string;
   size?: "sm" | "lg";
+  label?: string;
 }
 
-export function AddToCartButton({ productId, size = "sm" }: AddToCartButtonProps) {
+export function AddToCartButton({
+  productId,
+  size = "sm",
+  label,
+}: AddToCartButtonProps) {
   const { addItem } = useCart();
   const [added, setAdded] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -41,7 +46,7 @@ export function AddToCartButton({ productId, size = "sm" }: AddToCartButtonProps
           : "bg-ink text-cream hover:bg-blue hover:text-white"
       }`}
     >
-      {added ? "Added ✓" : size === "lg" ? "Add to cart" : "Add"}
+      {added ? "Added" : label ?? (size === "lg" ? "Add to cart" : "Buy")}
     </button>
   );
 }

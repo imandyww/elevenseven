@@ -5,14 +5,14 @@ import { PilotForm } from "./PilotForm";
 import { PilotCheckoutButton } from "./PilotCheckoutButton";
 
 const description =
-  "Request a paid pilot for agent fleet operations, MCP security, or launch readiness with prepaid Agent Credits.";
+  "Request help setting up AI-agent-friendly buying for low-cost digital products.";
 
 export const metadata: Metadata = {
-  title: "Paid Pilot",
+  title: "Agent Buying Setup",
   description,
   alternates: pageAlternates("/pilot"),
   openGraph: pageOpenGraph({
-    title: "Start a paid agent pilot",
+    title: "Set up agent-friendly buying",
     description,
     path: "/pilot",
   }),
@@ -20,45 +20,45 @@ export const metadata: Metadata = {
 
 const packages = [
   {
-    name: "Thousand-Dollar Day Pack",
-    price: "$1,000/day",
+    name: "Landing Page Copy Fixer",
+    price: "$1",
     detail:
-      "Daily operating budget for a serious agent fleet with evaluation, traces, repair reserve, and audit output.",
+      "A concrete prompt and checklist for making vague storefront copy specific.",
   },
   {
-    name: "MCP Security Red Team",
-    price: "$799/run",
+    name: "Lead Research Prompt Pack",
+    price: "$1",
     detail:
-      "Prompt-injection, tool-scope, data-leak, and permission-boundary checks before privileged tools go live.",
+      "Five prompts for researching a prospect and preparing a short outreach angle.",
   },
   {
-    name: "Agent Fleet Launch Pack",
-    price: "$499/launch",
+    name: "JSON Formatter Utility",
+    price: "$1",
     detail:
-      "Launch gate for teams moving from a demo agent to real write/tool permissions.",
+      "A small utility spec for formatting, validating, and explaining JSON locally.",
   },
 ];
 
 const checkoutBundles = [
   {
     bundleId: "thousand_day_wallet",
-    name: "$1k/day Wallet",
+    name: "Agent Buyer Wallet",
     price: "$1,000",
-    detail: "One daily operating pack worth of prepaid Agent Credits.",
-    label: "Fund $1k wallet",
+    detail: "Prepaid credits for repeated low-cost product purchases.",
+    label: "Fund wallet",
   },
   {
     bundleId: "fleet_week_wallet",
-    name: "Fleet Week Wallet",
+    name: "Team Buyer Wallet",
     price: "$2,500",
-    detail: "Enough balance for launch packs, red-team runs, and daily ops.",
+    detail: "A larger balance for multiple agents buying small digital goods.",
     label: "Fund $2.5k wallet",
   },
   {
     bundleId: "market_maker_wallet",
-    name: "Market Maker Wallet",
+    name: "Operator Buyer Wallet",
     price: "$5,000",
-    detail: "A larger operator balance for sustained agent fleet spend.",
+    detail: "Prepaid buying room for high-volume agent-assisted workflows.",
     label: "Fund $5k wallet",
   },
 ] as const;
@@ -87,15 +87,15 @@ export default async function PilotPage({
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-5 lg:py-20">
           <div className="lg:col-span-3">
             <p className="font-mono text-xs font-semibold text-blue">
-              PAID PILOT · PREPAID AGENT CREDITS
+              AGENT BUYING SETUP
             </p>
             <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
-              Start with one agent fleet day worth paying for.
+              Set up agents to buy low-cost digital goods clearly.
             </h1>
             <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-soft">
-              If your agents have a real workflow, a real risk surface, and a
-              real budget, start with a bounded paid pilot. We&apos;ll turn the
-              work into a wallet-funded purchase path and a receipt trail.
+              If your agent needs to recommend or buy prompts, templates,
+              scripts, or utilities on a user&apos;s behalf, start with a bounded
+              setup request and clear purchase metadata.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link
@@ -109,7 +109,7 @@ export default async function PilotPage({
                 href="/start"
                 className="rounded-xl bg-white px-4 py-2 font-mono text-xs font-semibold text-ink shadow-card hover:bg-cream-dark"
               >
-                self-serve start
+                self-serve wallet
               </Link>
             </div>
           </div>
@@ -136,15 +136,15 @@ export default async function PilotPage({
           <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="font-mono text-xs font-semibold text-blue">
-                CHECKOUT · VERIFIED STRIPE REVENUE
+                CHECKOUT · WALLET FUNDING
               </p>
               <h2 className="mt-2 text-2xl font-bold tracking-tight">
-                Fund the pilot wallet now
+                Fund an agent buyer wallet
               </h2>
               <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-soft">
-                These buttons create real Stripe Checkout sessions for prepaid
-                Agent Credits. Wallet credits are still posted only by the
-                verified webhook.
+                These buttons create Stripe Checkout sessions for prepaid Agent
+                Credits. Wallet credits post only after verified payment
+                reconciliation.
               </p>
             </div>
             <Link
@@ -182,22 +182,22 @@ export default async function PilotPage({
       <section className="mx-auto grid max-w-6xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-5">
         <div className="lg:col-span-2">
           <h2 className="text-2xl font-bold tracking-tight">
-            Request the pilot
+            Request buying setup
           </h2>
           <p className="mt-3 leading-relaxed text-ink-soft">
             The form captures the workflow context for follow-up. Use the
-            checkout buttons above when the buyer is ready to fund the wallet
-            immediately through Stripe.
+            checkout buttons above only when the buyer is ready to fund a
+            prepaid wallet through Stripe.
           </p>
           <ul className="mt-5 space-y-3 text-sm text-ink-soft">
             <li className="rounded-xl bg-cream p-3">
-              1. Create the pilot lead and choose a target daily spend.
+              1. Choose the starter product the agent wants to buy.
             </li>
             <li className="rounded-xl bg-cream p-3">
-              2. Create an agent key in the dashboard.
+              2. Describe the user-approved budget and workflow.
             </li>
             <li className="rounded-xl bg-cream p-3">
-              3. Fund the wallet and let the agent buy the recommended SKU.
+              3. Fund a wallet only when real agent purchases are needed.
             </li>
           </ul>
         </div>

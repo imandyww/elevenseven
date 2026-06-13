@@ -37,7 +37,7 @@ export function ShopClient() {
     <div className="space-y-6">
       <div className="flex flex-col gap-3 sm:flex-row">
         <label className="relative flex-1">
-          <span className="sr-only">Search upgrades</span>
+          <span className="sr-only">Search products</span>
           <span
             className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-soft"
             aria-hidden
@@ -48,8 +48,8 @@ export function ShopClient() {
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder={'Search upgrades... (try "eval", "security", or "procurement")'}
-            className="w-full rounded-2xl bg-white py-3 pl-10 pr-4 text-sm shadow-card outline-none ring-blue/40 transition-shadow placeholder:text-ink-soft/60 focus:ring-2"
+            placeholder={'Search products... (try "email", "json", or "research")'}
+            className="w-full rounded-lg bg-white py-3 pl-10 pr-4 text-sm shadow-card outline-none ring-blue/40 transition-shadow placeholder:text-ink-soft/60 focus:ring-2"
           />
         </label>
         <label className="sm:w-52">
@@ -57,7 +57,7 @@ export function ShopClient() {
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as SortOrder)}
-            className="w-full cursor-pointer appearance-none rounded-2xl bg-white px-4 py-3 text-sm font-medium shadow-card outline-none ring-blue/40 focus:ring-2"
+            className="w-full cursor-pointer appearance-none rounded-lg bg-white px-4 py-3 text-sm font-medium shadow-card outline-none ring-blue/40 focus:ring-2"
           >
             <option value="featured">Sort: Featured</option>
             <option value="price-asc">Price: Low to high</option>
@@ -73,7 +73,7 @@ export function ShopClient() {
       />
 
       <p className="font-mono text-xs text-ink-soft" aria-live="polite">
-        {visible.length} upgrade{visible.length === 1 ? "" : "s"} found
+        {visible.length} product{visible.length === 1 ? "" : "s"} found
       </p>
 
       <ProductGrid products={visible} />

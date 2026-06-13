@@ -2,9 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { bundles } from "@/lib/bundles";
-import { formatCents } from "@/lib/money";
+import { useEffect, useRef, useState } from "react";
 import type { WireOrder } from "@/lib/types";
 import { fromWireOrder } from "@/lib/orders";
 import { setLastOrder } from "@/lib/order-store";
@@ -13,9 +11,23 @@ import { useCart } from "@/components/cart-context";
 
 export default function CartPage() {
   const router = useRouter();
-  const { items, ready, subtotal, setQuantity, removeItem, clear } = useCart();
+  const { items, ready, subtotal, addItem, setQuantity, removeItem, clear } =
+    useCart();
   const [checkingOut, setCheckingOut] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const handledSku = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (!ready) return;
+    const searchParams = new URLSearchParams(window.location.search);
+    const sku = searchParams.get("sku");
+    if (!sku || handledSku.current === sku) return;
+    const product = getProduct(sku);
+    if (!product) return;
+    handledSku.current = sku;
+    addItem(product.id);
+    router.replace("/cart");
+  }, [addItem, ready, router]);
 
   const handleCheckout = async () => {
     setCheckingOut(true);
@@ -60,12 +72,12 @@ export default function CartPage() {
           Your cart is empty
         </h1>
         <p className="mt-3 text-ink-soft">
-          No upgrades yet. Your agent is running on pure vibes — that&apos;s
-          risky in production.
+          Add a prompt, template, checklist, script, or utility from the
+          product catalog.
         </p>
         <Link
-          href="/shop"
-          className="tactile mt-8 inline-block rounded-2xl bg-ink px-6 py-3 font-semibold text-cream shadow-card hover:bg-blue hover:text-white"
+          href="/products"
+          className="tactile mt-8 inline-block rounded-lg bg-ink px-6 py-3 font-semibold text-cream shadow-card hover:bg-blue hover:text-white"
         >
           Browse the store
         </Link>
@@ -73,28 +85,12 @@ export default function CartPage() {
     );
   }
 
-  const cartLines = items
-    .map((item) => {
-      const product = getProduct(item.productId);
-      return product
-        ? `${item.quantity}x ${product.name} (${product.sku})`
-        : `${item.quantity}x ${item.productId}`;
-    })
-    .join(", ");
-  const fundingWorkflow = `Production agent cart requested ${cartLines}. Fund the buyer wallet first, then let the agent buy these catalog items from prepaid credits. Cart subtotal is ${formatPrice(subtotal)}; recommended initial wallet funding is $1000.00.`;
-  const fundingQuery = new URLSearchParams({
-    agent: "cart-buyer-agent",
-    workflow: fundingWorkflow,
-  }).toString();
-  const fundingHref = `/buy/thousand_day_wallet?${fundingQuery}`;
-  const startHref = `/start?${fundingQuery}`;
-
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
       <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Cart</h1>
       <p className="mt-2 text-ink-soft">
-        Human-facing cart for browsing. Production agents buy through prepaid
-        credits and the authenticated API.
+        Review selected digital goods. This checkout is currently simulated
+        until a payment provider is connected to product checkout_url fields.
       </p>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-3">
@@ -106,17 +102,17 @@ export default function CartPage() {
             return (
               <div
                 key={item.productId}
-                className="flex flex-wrap items-center gap-4 rounded-2xl bg-white p-4 shadow-card sm:p-5"
+                className="flex flex-wrap items-center gap-4 rounded-lg bg-white p-4 shadow-card sm:p-5"
               >
                 <Link
-                  href={`/products/${product.id}`}
-                  className="grid size-14 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-blue-soft to-mint-soft text-3xl transition-transform hover:scale-110"
+                  href={`/products/${product.slug}`}
+                  className="grid size-14 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-blue-soft to-mint-soft font-mono text-sm font-bold transition-transform hover:scale-105"
                 >
                   {product.icon}
                 </Link>
                 <div className="min-w-0 flex-1">
                   <Link
-                    href={`/products/${product.id}`}
+                    href={`/products/${product.slug}`}
                     className="font-bold hover:text-blue"
                   >
                     {product.name}
@@ -125,7 +121,7 @@ export default function CartPage() {
                     {formatPrice(product.price)} each
                   </p>
                 </div>
-                <div className="flex items-center gap-1 rounded-xl bg-cream p-1">
+                <div className="flex items-center gap-1 rounded-lg bg-cream p-1">
                   <button
                     type="button"
                     onClick={() => setQuantity(item.productId, item.quantity - 1)}
@@ -185,68 +181,34 @@ export default function CartPage() {
                 {error}
               </p>
             )}
-            <Link
-              href={fundingHref}
-              className="tactile mt-5 block w-full rounded-2xl bg-ink px-6 py-3.5 text-center font-semibold text-cream shadow-card hover:bg-blue hover:text-white"
-            >
-              Fund production wallet
-            </Link>
-            <Link
-              href={startHref}
-              className="mt-3 block rounded-xl bg-white px-4 py-2.5 text-center font-mono text-xs font-semibold text-ink shadow-card hover:bg-cream-dark"
-            >
-              create buyer workspace
-            </Link>
             <button
               type="button"
               onClick={handleCheckout}
               disabled={checkingOut}
-              className="tactile mt-3 w-full rounded-xl bg-cream px-4 py-2.5 font-mono text-xs font-semibold text-ink-soft hover:bg-cream-dark disabled:cursor-not-allowed disabled:opacity-60"
+              className="tactile mt-5 w-full rounded-lg bg-ink px-6 py-3.5 font-semibold text-cream shadow-card hover:bg-blue hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {checkingOut ? "Creating demo order..." : "Run demo checkout"}
+              {checkingOut ? "Creating demo order..." : "Run simulated checkout"}
             </button>
-            <p className="mt-4 rounded-xl bg-coffee-soft p-3 font-mono text-[11px] leading-relaxed text-coffee">
-              Demo checkout never books revenue. Production agents spend
-              prepaid Agent Credits from a human-funded wallet.
+            <p className="mt-4 rounded-lg bg-coffee-soft p-3 font-mono text-[11px] leading-relaxed text-coffee">
+              This checkout does not charge a card or complete a real purchase.
+              Connect Stripe, LemonSqueezy, Gumroad, Polar, or another provider
+              by replacing product checkout_url values.
             </p>
           </div>
 
-          {/* Agent Credits */}
-          <div className="rounded-2xl bg-white p-6 shadow-card">
-            <h2 className="font-bold">Agent Credits</h2>
+          <div className="rounded-lg bg-white p-6 shadow-card">
+            <h2 className="font-bold">Agent-readable checkout notes</h2>
             <p className="mt-1 text-xs text-ink-soft">
-              Prepaid wallets keep humans in control while agents buy
-              evaluation, safety, and workflow packs.{" "}
+              Agents should confirm user consent, product price, refund policy,
+              and delivery type before initiating a purchase.{" "}
               <Link
-                href={fundingHref}
+                href="/products.json"
+                prefetch={false}
                 className="font-semibold text-blue underline-offset-4 hover:underline"
               >
-                Fund the $1k wallet →
+                Read /products.json
               </Link>
             </p>
-            <ul className="mt-4 space-y-3">
-              {bundles.map((bundle) => (
-                <li
-                  key={bundle.id}
-                  className="flex items-start gap-3 rounded-xl bg-cream p-3"
-                >
-                  <span className="text-xl" aria-hidden>
-                    {bundle.icon}
-                  </span>
-                  <span className="flex-1">
-                    <span className="flex items-baseline justify-between gap-2">
-                      <span className="text-sm font-bold">{bundle.name}</span>
-                      <span className="font-mono text-sm font-bold text-coffee">
-                        {formatCents(bundle.priceCents)}
-                      </span>
-                    </span>
-                    <span className="block text-xs text-ink-soft">
-                      {bundle.blurb}
-                    </span>
-                  </span>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
       </div>

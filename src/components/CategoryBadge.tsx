@@ -1,25 +1,14 @@
 import type { Category } from "@/lib/types";
 
 const categoryStyles: Record<Category, string> = {
-  Verification: "bg-blue-soft text-blue",
-  Memory: "bg-lavender-soft text-violet-600",
-  Reasoning: "bg-coffee-soft text-coffee",
-  Tools: "bg-blue-soft text-blue",
-  Prompting: "bg-mint-soft text-emerald-600",
-  Testing: "bg-lavender-soft text-violet-600",
-  Debugging: "bg-mint-soft text-emerald-600",
-  Speed: "bg-coffee-soft text-coffee",
-  Reputation: "bg-blue-soft text-blue",
-  Personality: "bg-lavender-soft text-violet-600",
-  Trust: "bg-mint-soft text-emerald-600",
-  Evaluation: "bg-lavender-soft text-violet-600",
-  Observability: "bg-blue-soft text-blue",
-  Compliance: "bg-coffee-soft text-coffee",
-  Procurement: "bg-mint-soft text-emerald-600",
+  Copywriting: "bg-blue-soft text-blue",
+  Research: "bg-lavender-soft text-violet-700",
+  Email: "bg-mint-soft text-emerald-700",
+  Operations: "bg-coffee-soft text-coffee",
   Data: "bg-blue-soft text-blue",
-  Reliability: "bg-lavender-soft text-violet-600",
-  Security: "bg-coffee-soft text-coffee",
-  Integration: "bg-mint-soft text-emerald-600",
+  "Real Estate": "bg-mint-soft text-emerald-700",
+  Strategy: "bg-lavender-soft text-violet-700",
+  Utility: "bg-coffee-soft text-coffee",
 };
 
 export function CategoryBadge({ category }: { category: Category }) {

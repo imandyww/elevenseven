@@ -17,11 +17,11 @@ const pilotLeadSchema = z.object({
   website: z.string().trim().max(200).optional(),
   requestedSku: z
     .enum([
-      "thousand-dollar-day-pack",
-      "agent-fleet-launch-pack",
-      "mcp-security-red-team",
+      "landing-page-copy-fixer",
+      "lead-research-prompt-pack",
+      "json-formatter-utility",
     ])
-    .default("thousand-dollar-day-pack"),
+    .default("landing-page-copy-fixer"),
   targetDailySpendCents: z.coerce.number().int().min(100000).max(500000),
   useCase: z.string().trim().min(20).max(1200),
   companyUrl2: z.string().optional(),

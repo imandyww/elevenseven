@@ -22,7 +22,7 @@ export default function Image() {
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ fontSize: 110, display: "flex" }}>🏪🛍️</div>
+        <div style={{ fontSize: 72, display: "flex", fontWeight: 800 }}>11:7</div>
         <div
           style={{
             marginTop: 28,
@@ -53,7 +53,7 @@ export default function Image() {
             display: "flex",
           }}
         >
-          $1k/day packs · fleet launches · agent safety
+          $1 digital goods · products.json · llms.txt
         </div>
       </div>
     ),

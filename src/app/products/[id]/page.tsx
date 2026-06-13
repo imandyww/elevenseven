@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { formatPrice, getProduct, products } from "@/lib/products";
+import {
+  formatPrice,
+  getProduct,
+  productPath,
+  products,
+} from "@/lib/products";
 import { absoluteUrl, pageAlternates, pageOpenGraph, SITE_NAME } from "@/lib/site";
 import { AddToCartButton } from "@/components/AddToCartButton";
 import { CategoryBadge } from "@/components/CategoryBadge";
@@ -13,14 +18,8 @@ interface ProductPageProps {
   params: Promise<{ id: string }>;
 }
 
-const tierCopy = {
-  micro: "Low-risk impulse purchase for frequent agent loops.",
-  growth: "Higher-intent purchase for production workflows and launch gates.",
-  fleet: "Fleet-priced item for budgeted agents operating under human-approved limits.",
-} as const;
-
 export function generateStaticParams() {
-  return products.map((p) => ({ id: p.id }));
+  return products.map((p) => ({ id: p.slug }));
 }
 
 export async function generateMetadata({
@@ -29,15 +28,15 @@ export async function generateMetadata({
   const { id } = await params;
   const product = getProduct(id);
   if (!product) return { title: "Product not found" };
-  const title = `${product.name} — ${formatPrice(product.price)} ${product.category} upgrade for AI agents`;
+  const title = `${product.name} - ${formatPrice(product.price)} digital product`;
   return {
     title: product.name,
     description: product.description,
-    alternates: pageAlternates(`/products/${product.id}`),
+    alternates: pageAlternates(productPath(product)),
     openGraph: pageOpenGraph({
       title,
       description: product.description,
-      path: `/products/${product.id}`,
+      path: productPath(product),
     }),
     twitter: {
       card: "summary_large_image",
@@ -57,11 +56,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
     .concat(products.filter((p) => p.id !== product.id && p.category !== product.category))
     .slice(0, 3);
 
-  const purchaseOutput = {
-    sku: product.sku,
+  const agentReadableProduct = {
+    id: product.id,
+    slug: product.slug,
     name: product.name,
-    unit_price: product.price,
-    manifest: product.manifest,
+    price: product.price,
+    currency: product.currency,
+    category: product.category,
+    delivery_type: product.delivery_type,
+    checkout_url: product.checkout_url,
+    agent_details_url: product.agent_details_url,
+    refund_policy: product.refund_policy,
+    tags: product.tags,
+    updated_at: product.updated_at,
   };
 
   const productJsonLd = {
@@ -71,14 +78,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
     sku: product.sku,
     description: product.longDescription,
     category: product.category,
-    url: absoluteUrl(`/products/${product.id}`),
+    url: absoluteUrl(productPath(product)),
     brand: { "@type": "Brand", name: SITE_NAME },
     offers: {
       "@type": "Offer",
       price: product.price.toFixed(2),
-      priceCurrency: "USD",
+      priceCurrency: product.currency,
       availability: "https://schema.org/InStock",
-      url: absoluteUrl(`/products/${product.id}`),
+      url: absoluteUrl(product.checkout_url),
       seller: { "@id": absoluteUrl("/#organization") },
     },
   };
@@ -87,12 +94,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Shop", item: absoluteUrl("/shop") },
+      { "@type": "ListItem", position: 1, name: "Products", item: absoluteUrl("/products") },
       {
         "@type": "ListItem",
         position: 2,
         name: product.name,
-        item: absoluteUrl(`/products/${product.id}`),
+        item: absoluteUrl(productPath(product)),
       },
     ],
   };
@@ -102,17 +109,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <JsonLd data={productJsonLd} />
       <JsonLd data={breadcrumbJsonLd} />
       <nav className="mb-6 font-mono text-xs text-ink-soft" aria-label="Breadcrumb">
-        <Link href="/shop" className="hover:text-blue">
-          shop
+        <Link href="/products" className="hover:text-blue">
+          products
         </Link>{" "}
-        / <span className="text-ink">{product.id}</span>
+        / <span className="text-ink">{product.slug}</span>
       </nav>
 
       <div className="grid gap-8 lg:grid-cols-5">
-        {/* Big product card */}
         <div className="lg:col-span-2">
-          <div className="hero-gradient sticky top-24 rounded-2xl bg-white p-8 text-center shadow-card">
-            <div className="mx-auto mb-6 grid size-32 animate-float place-items-center rounded-3xl bg-gradient-to-br from-blue-soft via-lavender-soft to-mint-soft text-7xl shadow-card">
+          <div className="sticky top-24 rounded-lg border border-cream-dark bg-white p-8 text-center shadow-card">
+            <div className="mx-auto mb-6 grid size-24 place-items-center rounded-lg bg-gradient-to-br from-blue-soft via-mint-soft to-lavender-soft font-mono text-2xl font-bold text-ink shadow-card">
               {product.icon}
             </div>
             <CategoryBadge category={product.category} />
@@ -125,69 +131,94 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <p className="mt-3 text-sm leading-relaxed text-ink-soft">
               {product.description}
             </p>
-            {product.revenueTier && (
-              <p className="mt-4 rounded-xl bg-white/70 px-3 py-2 font-mono text-[11px] leading-relaxed text-ink-soft">
-                {tierCopy[product.revenueTier]}
-              </p>
-            )}
             <div className="mt-6">
-              <AddToCartButton productId={product.id} size="lg" />
+              <AddToCartButton productId={product.id} size="lg" label="Buy" />
             </div>
-            <p className="mt-4 font-mono text-[11px] text-ink-soft/70">
-              sku: {product.sku} · digital delivery · instant activation
+            <p className="mt-4 font-mono text-[11px] text-ink-soft/75">
+              sku: {product.sku} · {product.delivery_type.replaceAll("_", " ")}
             </p>
+            <Link
+              href={product.agent_details_url}
+              prefetch={false}
+              className="mt-4 inline-block font-mono text-xs font-semibold text-blue underline-offset-4 hover:underline"
+            >
+              Agent-readable details
+            </Link>
           </div>
         </div>
 
-        {/* Details */}
         <div className="space-y-8 lg:col-span-3">
-          <section className="rounded-2xl bg-white p-6 shadow-card sm:p-8">
+          <section className="rounded-lg bg-white p-6 shadow-card sm:p-8">
             <h2 className="text-lg font-bold tracking-tight">
-              What this does for your agent
+              What the buyer receives
             </h2>
             <p className="mt-3 leading-relaxed text-ink-soft">
               {product.longDescription}
             </p>
+            <p className="mt-4 rounded-lg bg-cream px-4 py-3 text-sm leading-relaxed text-ink-soft">
+              {product.deliverySummary}
+            </p>
           </section>
 
-          {product.buyerSignal && (
-            <section className="rounded-2xl bg-white p-6 shadow-card sm:p-8">
-              <h2 className="text-lg font-bold tracking-tight">
-                Why an agent buys it
-              </h2>
-              <p className="mt-3 leading-relaxed text-ink-soft">
-                {product.buyerSignal}
-              </p>
-            </section>
-          )}
-
-          <section className="rounded-2xl bg-white p-6 shadow-card sm:p-8">
+          <section className="rounded-lg bg-white p-6 shadow-card sm:p-8">
             <h2 className="text-lg font-bold tracking-tight">
-              Example use case
+              Why it is useful
             </h2>
-            <div className="mt-3 rounded-xl border-l-4 border-mint bg-mint-soft/50 p-4">
+            <p className="mt-3 leading-relaxed text-ink-soft">
+              {product.buyerSignal}
+            </p>
+            <div className="mt-4 rounded-lg border-l-4 border-mint bg-mint-soft/50 p-4">
               <p className="text-sm leading-relaxed text-ink-soft">
                 {product.useCase}
               </p>
             </div>
           </section>
 
+          <section className="rounded-lg bg-white p-6 shadow-card sm:p-8">
+            <h2 className="text-lg font-bold tracking-tight">
+              Checkout and refund policy
+            </h2>
+            <dl className="mt-4 grid gap-4 text-sm sm:grid-cols-2">
+              <div>
+                <dt className="font-mono text-xs font-semibold text-blue">
+                  Checkout URL
+                </dt>
+                <dd className="mt-1 break-all text-ink-soft">
+                  {product.checkout_url}
+                </dd>
+              </div>
+              <div>
+                <dt className="font-mono text-xs font-semibold text-blue">
+                  Delivery
+                </dt>
+                <dd className="mt-1 text-ink-soft">
+                  Instant digital delivery unless otherwise stated.
+                </dd>
+              </div>
+              <div className="sm:col-span-2">
+                <dt className="font-mono text-xs font-semibold text-blue">
+                  Refund policy
+                </dt>
+                <dd className="mt-1 text-ink-soft">{product.refund_policy}</dd>
+              </div>
+            </dl>
+          </section>
+
           <section>
             <h2 className="mb-3 text-lg font-bold tracking-tight">
-              Machine-readable purchase output
+              Machine-readable product metadata
             </h2>
             <JsonManifest
-              data={purchaseOutput}
-              title={`${product.sku}.manifest.json`}
+              data={agentReadableProduct}
+              title={`${product.slug}.json`}
             />
           </section>
         </div>
       </div>
 
-      {/* Related */}
       <section className="mt-16">
         <h2 className="mb-6 text-xl font-bold tracking-tight">
-          Agents also bought
+          Related products
         </h2>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {related.map((p) => (

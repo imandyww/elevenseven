@@ -61,7 +61,7 @@ export function fundingHandoff(input: FundingHandoffInput) {
         "Idempotency-Key": "client-generated-key",
       },
       body: {
-        sku: input.sku ?? "thousand-dollar-day-pack",
+        sku: input.sku ?? "landing-page-copy-fixer",
         quantity: input.quantity ?? 1,
         max_total_cents: input.requiredCreditsCents,
         reason:

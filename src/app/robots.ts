@@ -13,6 +13,8 @@ export default function robots(): MetadataRoute.Robots {
     "/",
     "/.well-known/",
     "/llms.txt",
+    "/products",
+    "/products.json",
     "/openapi.json",
     "/api/agent-catalog",
     "/api/products",

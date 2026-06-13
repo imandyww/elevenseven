@@ -1,23 +1,12 @@
 export type Category =
-  | "Verification"
-  | "Memory"
-  | "Reasoning"
-  | "Tools"
-  | "Prompting"
-  | "Testing"
-  | "Debugging"
-  | "Speed"
-  | "Reputation"
-  | "Personality"
-  | "Trust"
-  | "Evaluation"
-  | "Observability"
-  | "Compliance"
-  | "Procurement"
+  | "Copywriting"
+  | "Research"
+  | "Email"
+  | "Operations"
   | "Data"
-  | "Reliability"
-  | "Security"
-  | "Integration";
+  | "Real Estate"
+  | "Strategy"
+  | "Utility";
 
 export interface ProductManifest {
   upgrade_type: string;
@@ -27,15 +16,24 @@ export interface ProductManifest {
 
 export interface Product {
   id: string;
+  slug: string;
   sku: string;
   name: string;
   price: number;
+  currency: "USD";
   category: Category;
+  delivery_type: "instant_digital_download";
+  checkout_url: string;
+  agent_details_url: string;
+  refund_policy: string;
+  tags: string[];
+  updated_at: string;
   description: string;
   longDescription: string;
   icon: string;
   useCase: string;
   buyerSignal?: string;
+  deliverySummary: string;
   revenueTier?: "micro" | "growth" | "fleet";
   manifest: ProductManifest;
 }

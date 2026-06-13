@@ -3,55 +3,61 @@ import Link from "next/link";
 import { pageAlternates, SITE_NAME, SUPPORT_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Terms of Service",
+  title: "Terms",
   description:
-    "Terms for buying prepaid Agent Credits and using the Eleven Seven agent purchasing API.",
+    "Plain-English terms for buying digital products from ElevenSeven AI.",
   alternates: pageAlternates("/terms"),
 };
 
 const sections = [
   {
-    title: "1. What this service is",
+    title: "1. What ElevenSeven sells",
     body: [
-      `${SITE_NAME} sells prepaid "Agent Credits." A human funds an organization wallet through Stripe Checkout; AI agents authorized by that organization then spend from the wallet through our API, inside spending policies the organization controls. Credits are a prepayment for catalog products — they are not money, not a deposit account, not redeemable for cash, and not transferable between organizations.`,
+      `${SITE_NAME} sells low-cost digital goods: prompts, templates, scripts, checklists, utilities, and workflow helpers. Products are delivered digitally unless a product page says otherwise.`,
     ],
   },
   {
-    title: "2. Accounts, agents, and API keys",
+    title: "2. Prices and checkout",
     body: [
-      "Creating a workspace gives your organization a wallet and one or more agent API keys. You are responsible for everything done with your keys, including purchases made by autonomous agents you run. Keep keys secret; if a key leaks, revoke it in writing to support or rotate it immediately. We may pause or revoke agents that appear compromised or abusive.",
-      "You must provide a working billing email. We use it for receipts, recovery links, and notices about your wallet.",
+      "Prices are shown in USD before purchase. Starter products are currently $1. Real payment provider links are configured through each product's checkout_url field; this build may show a cart or simulated checkout until a provider is connected.",
+      "Do not treat a simulated checkout response as proof that a real payment was completed.",
     ],
   },
   {
-    title: "3. Payments and credits",
+    title: "3. Humans and AI agents",
     body: [
-      "Wallet funding is processed by Stripe. Credits appear in your wallet only after Stripe confirms payment. Every wallet movement is recorded in an append-only ledger, and every agent purchase produces a receipt and entitlement manifest you can audit.",
-      "Credited amounts match charged amounts 1:1. Prices for catalog products are shown before purchase and frozen into the receipt at purchase time.",
+      "Humans may browse and buy directly. AI agents may read metadata, compare products, and initiate purchase requests only when they have clear user consent and an approved budget.",
+      "You are responsible for purchases initiated by agents you control.",
     ],
   },
   {
-    title: "4. Refunds",
+    title: "4. Delivery",
     body: [
-      "Unspent credits are refundable to the original payment method within 30 days of purchase — email support from your billing address. Credits already spent by your agents are not refundable, because the corresponding products were delivered at purchase time. If we refund a payment (including after a card dispute), the matching credits are removed from your wallet and your agents may be paused until the balance is reconciled.",
+      "Products are digital goods with instant delivery unless otherwise stated. A delivered product may be a prompt, template, checklist, script, small utility, documentation, or structured instructions.",
     ],
   },
   {
-    title: "5. Acceptable use",
+    title: "5. Refunds",
     body: [
-      "You may not use the service for unlawful activity, to test stolen payment cards, to launder funds, to probe or disrupt the platform, or to resell credits. Agents must operate within the spending policies their organization sets. We may suspend organizations that violate these rules and will refund any unspent, lawfully purchased credits when we do.",
+      "Refunds for digital goods are handled under the refund policy on each product and the refunds page. If delivery fails, a duplicate purchase happens, or the product is materially not as described, contact support.",
     ],
   },
   {
-    title: "6. Service changes and availability",
+    title: "6. Acceptable use",
     body: [
-      "We may change the catalog, prices, and API over time; documented API versions will get reasonable notice before breaking changes. The service is provided \"as is\" without warranties. To the maximum extent permitted by law, our total liability for any claim is limited to the amount you paid us in the 12 months before the claim arose.",
+      "Do not use ElevenSeven products or APIs for unlawful activity, payment abuse, credential theft, spam, platform disruption, or attempts to bypass another site's rules or security controls.",
     ],
   },
   {
-    title: "7. Contact",
+    title: "7. No professional advice",
     body: [
-      `Questions, refund requests, and key-compromise reports: ${SUPPORT_EMAIL}. We may update these terms; material changes will be announced on this page with a new effective date, and continued use after that date is acceptance.`,
+      "Products may help with business, technical, marketing, or operational tasks, but they are not legal, financial, tax, medical, or professional advice. Review outputs before using them.",
+    ],
+  },
+  {
+    title: "8. Contact",
+    body: [
+      `Questions, refund requests, and support issues: ${SUPPORT_EMAIL}. These terms may be updated as the storefront and checkout provider evolve.`,
     ],
   },
 ];
@@ -59,20 +65,24 @@ const sections = [
 export default function TermsPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
-      <p className="font-mono text-xs font-semibold text-blue">THE FINE PRINT</p>
-      <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">
-        Terms of Service
+      <p className="font-mono text-xs font-semibold uppercase tracking-wide text-blue">
+        Store terms
+      </p>
+      <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+        Terms
       </h1>
       <p className="mt-2 font-mono text-xs text-ink-soft/70">
-        Effective June 12, 2026
+        Effective June 13, 2026
       </p>
       <p className="mt-5 leading-relaxed text-ink-soft">
-        These terms govern your purchase of prepaid Agent Credits and your use
-        of the {SITE_NAME} storefront and agent API. By funding a wallet or
-        using an agent API key, you agree to them on behalf of your
-        organization. See also our{" "}
+        These plain-English terms explain how the storefront works. They are
+        practical operating terms, not legal advice. See also the{" "}
         <Link href="/privacy" className="text-blue underline underline-offset-4">
           Privacy Policy
+        </Link>{" "}
+        and{" "}
+        <Link href="/refunds" className="text-blue underline underline-offset-4">
+          Refund Policy
         </Link>
         .
       </p>

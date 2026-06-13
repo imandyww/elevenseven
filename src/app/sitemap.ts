@@ -27,16 +27,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.9,
     },
-    { url: absoluteUrl("/shop"), lastModified, changeFrequency: "weekly", priority: 0.9 },
+    { url: absoluteUrl("/products"), lastModified, changeFrequency: "weekly", priority: 0.95 },
+    { url: absoluteUrl("/products.json"), lastModified, changeFrequency: "weekly", priority: 0.95 },
+    { url: absoluteUrl("/shop"), lastModified, changeFrequency: "weekly", priority: 0.7 },
     { url: absoluteUrl("/pilot"), lastModified, changeFrequency: "weekly", priority: 0.9 },
     { url: absoluteUrl("/docs"), lastModified, changeFrequency: "monthly", priority: 0.8 },
     { url: absoluteUrl("/about"), lastModified, changeFrequency: "monthly", priority: 0.5 },
     { url: absoluteUrl("/terms"), lastModified, changeFrequency: "monthly", priority: 0.3 },
     { url: absoluteUrl("/privacy"), lastModified, changeFrequency: "monthly", priority: 0.3 },
+    { url: absoluteUrl("/refunds"), lastModified, changeFrequency: "monthly", priority: 0.3 },
+    { url: absoluteUrl("/contact"), lastModified, changeFrequency: "monthly", priority: 0.3 },
   ];
 
   const productPages: MetadataRoute.Sitemap = products.map((product) => ({
-    url: absoluteUrl(`/products/${product.id}`),
+    url: absoluteUrl(`/products/${product.slug}`),
     lastModified,
     changeFrequency: "weekly",
     priority: 0.8,

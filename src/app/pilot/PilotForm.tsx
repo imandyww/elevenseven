@@ -10,19 +10,19 @@ const initialState: PilotLeadState = {
 
 const skuOptions = [
   {
-    value: "thousand-dollar-day-pack",
-    label: "Thousand-Dollar Day Pack",
-    price: "$1,000/day",
+    value: "landing-page-copy-fixer",
+    label: "Landing Page Copy Fixer",
+    price: "$1",
   },
   {
-    value: "mcp-security-red-team",
-    label: "MCP Security Red Team",
-    price: "$799/run",
+    value: "lead-research-prompt-pack",
+    label: "Lead Research Prompt Pack",
+    price: "$1",
   },
   {
-    value: "agent-fleet-launch-pack",
-    label: "Agent Fleet Launch Pack",
-    price: "$499/launch",
+    value: "json-formatter-utility",
+    label: "JSON Formatter Utility",
+    price: "$1",
   },
 ];
 
@@ -78,7 +78,7 @@ export function PilotForm() {
       </div>
 
       <fieldset>
-        <legend className="mb-2 text-sm font-medium">Pilot package</legend>
+        <legend className="mb-2 text-sm font-medium">Starter product</legend>
         <div className="grid gap-3 md:grid-cols-3">
           {skuOptions.map((option, index) => (
             <label
@@ -108,9 +108,9 @@ export function PilotForm() {
           defaultValue="100000"
           className="w-full rounded-xl bg-cream px-3 py-2 outline-none ring-blue/40 focus:ring-2"
         >
-          <option value="100000">$1,000/day</option>
-          <option value="250000">$2,500/day</option>
-          <option value="500000">$5,000/day</option>
+          <option value="100000">$1,000 wallet limit</option>
+          <option value="250000">$2,500 wallet limit</option>
+          <option value="500000">$5,000 wallet limit</option>
         </select>
       </label>
 
@@ -123,7 +123,7 @@ export function PilotForm() {
           maxLength={1200}
           rows={5}
           className="w-full rounded-xl bg-cream px-3 py-2 outline-none ring-blue/40 focus:ring-2"
-          placeholder="Describe the agent workflow, tools, risk level, and what a successful paid day looks like."
+          placeholder="Describe what the agent should buy, the user-approved budget, and how the digital product will be used."
         />
       </label>
 
@@ -153,7 +153,7 @@ export function PilotForm() {
         disabled={pending}
         className="tactile w-full rounded-xl bg-ink px-5 py-3 font-semibold text-cream shadow-card hover:bg-blue hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {pending ? "Submitting..." : "Request paid pilot"}
+        {pending ? "Submitting..." : "Request buying setup"}
       </button>
     </form>
   );

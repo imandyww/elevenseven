@@ -103,7 +103,7 @@ export async function createSelfServeStart(
         website: data.website || null,
         useCase: data.workflow,
         targetDailySpendCents: data.targetDailySpendCents,
-        requestedSku: "thousand-dollar-day-pack",
+        requestedSku: "landing-page-copy-fixer",
         source: "self_serve_start",
         status: "contacted",
       },

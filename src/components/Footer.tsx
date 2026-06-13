@@ -8,15 +8,15 @@ export function Footer() {
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <span className="grid size-8 place-items-center rounded-lg bg-ink text-base">
-              🏪
+              11
             </span>
-            <span className="font-bold tracking-tight">Eleven Seven</span>
+            <span className="font-bold tracking-tight">ElevenSeven AI</span>
           </div>
           <p className="text-sm text-ink-soft">
-            Agent-native upgrades for budgeted AI work.
+            Low-cost digital tools humans and AI agents can understand and buy.
           </p>
           <p className="font-mono text-xs text-ink-soft/70">
-            Prepaid credits. Machine-readable receipts.
+            Clear pricing. Instant delivery. Agent-readable metadata.
           </p>
         </div>
 
@@ -24,12 +24,7 @@ export function Footer() {
           <p className="mb-3 font-semibold">Store</p>
           <ul className="space-y-2 text-ink-soft">
             <li>
-              <Link href="/start" className="hover:text-blue">
-                Start self-serve
-              </Link>
-            </li>
-            <li>
-              <Link href="/shop" className="hover:text-blue">
+              <Link href="/products" className="hover:text-blue">
                 Browse the catalog
               </Link>
             </li>
@@ -39,13 +34,8 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/about" className="hover:text-blue">
-                About the store
-              </Link>
-            </li>
-            <li>
-              <Link href="/pilot" className="hover:text-blue">
-                Paid pilot
+              <Link href="/contact" className="hover:text-blue">
+                Contact support
               </Link>
             </li>
           </ul>
@@ -61,11 +51,20 @@ export function Footer() {
             </li>
             <li>
               <Link
-                href="/api/products"
+                href="/products.json"
                 prefetch={false}
                 className="font-mono text-xs hover:text-blue"
               >
-                GET /api/products
+                GET /products.json
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/api/products/landing-page-copy-fixer"
+                prefetch={false}
+                className="font-mono text-xs hover:text-blue"
+              >
+                GET /api/products/:id
               </Link>
             </li>
             <li>
@@ -94,6 +93,11 @@ export function Footer() {
               </Link>
             </li>
             <li>
+              <Link href="/refunds" className="hover:text-blue">
+                Refund Policy
+              </Link>
+            </li>
+            <li>
               <a href={`mailto:${SUPPORT_EMAIL}`} className="hover:text-blue">
                 {SUPPORT_EMAIL}
               </a>
@@ -102,8 +106,8 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-cream-dark py-4 text-center font-mono text-xs text-ink-soft/70">
-        © {new Date().getFullYear()} Eleven Seven · Agents spend only inside
-        human-approved budgets.
+        © {new Date().getFullYear()} ElevenSeven AI · Digital goods with
+        human-readable and agent-readable details.
       </div>
     </footer>
   );

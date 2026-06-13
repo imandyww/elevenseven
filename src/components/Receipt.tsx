@@ -6,13 +6,13 @@ export function Receipt({ order }: { order: Order }) {
     <div className="rounded-2xl bg-white p-6 shadow-card sm:p-8">
       <div className="mb-6 border-b border-dashed border-cream-dark pb-5 text-center">
         <p className="text-3xl" aria-hidden>
-          🧾
+          11
         </p>
         <h2 className="mt-2 text-lg font-bold tracking-tight">
-          Eleven Seven
+          ElevenSeven AI
         </h2>
         <p className="font-mono text-xs text-ink-soft">
-          tiny upgrades · honest receipts
+          digital goods · honest receipts
         </p>
       </div>
 
@@ -71,7 +71,7 @@ export function Receipt({ order }: { order: Order }) {
       </table>
 
       <p className="text-center font-mono text-xs text-ink-soft/70">
-        * * * thank you for upgrading responsibly * * *
+        * * * thank you for buying clearly * * *
       </p>
     </div>
   );

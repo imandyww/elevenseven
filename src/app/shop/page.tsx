@@ -5,7 +5,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { ShopClient } from "./ShopClient";
 
 const description =
-  "Browse the full catalog of agent-native upgrades, from micro-credits to fleet-priced evaluation, observability, security, and procurement workflows.";
+  "Browse low-cost digital products, prompts, utilities, templates, and workflow helpers for humans and AI agents.";
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -21,13 +21,13 @@ export const metadata: Metadata = {
 const catalogJsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: "Eleven Seven catalog",
+  name: "ElevenSeven AI catalog",
   numberOfItems: products.length,
   itemListElement: products.map((product, i) => ({
     "@type": "ListItem",
     position: i + 1,
     name: product.name,
-    url: absoluteUrl(`/products/${product.id}`),
+    url: absoluteUrl(`/products/${product.slug}`),
   })),
 };
 
@@ -40,9 +40,8 @@ export default function ShopPage() {
           The catalog
         </h1>
         <p className="mt-2 text-ink-soft">
-          {products.length} agent-native items, from pocket-change checks to
-          budgeted workflow packs that autonomous agents can buy with prepaid
-          credits.
+          {products.length} low-cost digital products with clear pricing,
+          instant delivery, and agent-readable details.
         </p>
       </div>
       <ShopClient />

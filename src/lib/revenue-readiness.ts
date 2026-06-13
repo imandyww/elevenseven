@@ -61,8 +61,8 @@ export async function getRevenueReadiness(options: UrlOptions = {}) {
 
   const openCheckoutCount = openCheckoutStats._count.id;
   const openCheckoutCents = openCheckoutStats._sum.amountCents ?? 0;
-  const hasThousandDollarSku = products.some(
-    (product) => product.sku === "thousand-dollar-day-pack",
+  const hasStarterCatalog = products.some(
+    (product) => product.sku === "landing-page-copy-fixer",
   );
   const webhookEvidenceAt =
     completedStripeEvent?.processedAt ??
@@ -158,13 +158,13 @@ export async function getRevenueReadiness(options: UrlOptions = {}) {
       action: "Have agents request /v1/standing-orders and activate qualified requests.",
     },
     {
-      id: "thousand_dollar_sku",
-      label: "$1k/day SKU",
-      status: hasThousandDollarSku ? "pass" : "fail",
-      detail: hasThousandDollarSku
-        ? "The catalog includes thousand-dollar-day-pack."
-        : "The catalog is missing the target daily operating SKU.",
-      action: "Restore the thousand-dollar-day-pack product before selling the daily revenue target.",
+      id: "starter_catalog_sku",
+      label: "Starter catalog SKU",
+      status: hasStarterCatalog ? "pass" : "fail",
+      detail: hasStarterCatalog
+        ? "The catalog includes landing-page-copy-fixer."
+        : "The catalog is missing the starter storefront SKU.",
+      action: "Restore the landing-page-copy-fixer product before publishing the storefront.",
     },
   ];
 

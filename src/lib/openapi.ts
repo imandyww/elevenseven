@@ -6,9 +6,9 @@ import { absoluteUrl, SITE_DESCRIPTION, SITE_NAME } from "./site";
 const productSkus = products.map((product) => product.sku);
 const bundleIds = bundles.map((bundle) => bundle.id);
 const fundingHandoffExample = fundingHandoff({
-  requiredCreditsCents: 100000,
-  currentBalanceCents: 500,
-  sku: "thousand-dollar-day-pack",
+  requiredCreditsCents: 100,
+  currentBalanceCents: 0,
+  sku: "landing-page-copy-fixer",
   quantity: 1,
 });
 
@@ -140,12 +140,12 @@ export function agentStoreOpenApiDocument() {
               "application/json": {
                 schema: { $ref: "#/components/schemas/RecommendationRequest" },
                 examples: {
-                  dailyOperations: {
+                  copyFix: {
                     value: {
-                      task: "Daily production workflow for outbound sales agents",
-                      risk_level: "high",
-                      budget_cents: 100000,
-                      target_daily_revenue_cents: 100000,
+                      task: "Fix vague landing page copy before a product launch",
+                      risk_level: "low",
+                      budget_cents: 100,
+                      target_daily_revenue_cents: 100,
                     },
                   },
                 },
@@ -177,17 +177,17 @@ export function agentStoreOpenApiDocument() {
               "application/json": {
                 schema: { $ref: "#/components/schemas/ProposalRequest" },
                 examples: {
-                  dailyOperationsBuyer: {
+                  lowCostDigitalProductBuyer: {
                     value: {
                       organization_name: "Acme Agent Ops",
                       billing_email: "ops@example.com",
                       website: "https://example.com",
                       agent_name: "revenue-agent",
                       workflow:
-                        "Daily outbound sales workflow with prepaid buying authority and a measurable revenue target.",
-                      task: "Daily production workflow for outbound sales agents",
-                      risk_level: "high",
-                      budget_cents: 100000,
+                        "AI agent buying a $1 digital product with clear user consent.",
+                      task: "Fix vague landing page copy before a product launch",
+                      risk_level: "low",
+                      budget_cents: 100,
                       target_daily_spend_cents: 100000,
                     },
                   },
@@ -274,9 +274,9 @@ export function agentStoreOpenApiDocument() {
               "application/json": {
                 schema: { $ref: "#/components/schemas/CartPricingRequest" },
                 examples: {
-                  twoTruthTokens: {
+                  twoCopyFixers: {
                     value: {
-                      items: [{ sku: "truth-token", quantity: 2 }],
+                      items: [{ sku: "landing-page-copy-fixer", quantity: 2 }],
                     },
                   },
                 },
@@ -355,7 +355,7 @@ export function agentStoreOpenApiDocument() {
                       target_daily_spend_cents: 100000,
                       initial_bundle: "thousand_day_wallet",
                       workflow:
-                        "Production agent workflow with a measurable revenue target and prepaid buying authority.",
+                        "AI agent buying low-cost digital products with user consent and prepaid buying authority.",
                     },
                   },
                 },
@@ -413,7 +413,7 @@ export function agentStoreOpenApiDocument() {
       "/api/revenue/close-plan": {
         get: {
           tags: ["Operations"],
-          summary: "Get today's exact plan to close the $1k/day Stripe revenue target.",
+          summary: "Get today's Stripe wallet funding close plan.",
           operationId: "getRevenueClosePlan",
           responses: {
             "200": {
@@ -496,12 +496,12 @@ export function agentStoreOpenApiDocument() {
               "application/json": {
                 schema: { $ref: "#/components/schemas/PurchaseRequest" },
                 examples: {
-                  thousandDollarDayPack: {
+                  landingPageCopyFixer: {
                     value: {
-                      sku: "thousand-dollar-day-pack",
+                      sku: "landing-page-copy-fixer",
                       quantity: 1,
-                      max_total_cents: 100000,
-                      reason: "Daily operating pack for an agent fleet with a measurable target.",
+                      max_total_cents: 100,
+                      reason: "Fix vague landing page copy with a concrete storefront rewrite prompt.",
                     },
                   },
                 },
@@ -546,13 +546,13 @@ export function agentStoreOpenApiDocument() {
               "application/json": {
                 schema: { $ref: "#/components/schemas/FundingRequestCreateRequest" },
                 examples: {
-                  thousandDollarDayPack: {
+                  landingPageCopyFixer: {
                     value: {
-                      sku: "thousand-dollar-day-pack",
+                      sku: "landing-page-copy-fixer",
                       quantity: 1,
-                      max_total_cents: 100000,
+                      max_total_cents: 100,
                       reason:
-                        "Wallet needs funding before the agent can buy the daily operating pack.",
+                        "Wallet needs funding before the agent can buy the landing page copy fixer.",
                     },
                   },
                 },
@@ -597,14 +597,14 @@ export function agentStoreOpenApiDocument() {
               "application/json": {
                 schema: { $ref: "#/components/schemas/StandingOrderCreateRequest" },
                 examples: {
-                  dailyThousandDollarPack: {
+                  dailyEmailTemplate: {
                     value: {
-                      sku: "thousand-dollar-day-pack",
+                      sku: "email-follow-up-template",
                       quantity: 1,
                       cadence: "daily",
-                      max_total_cents: 100000,
+                      max_total_cents: 100,
                       reason:
-                        "Run the daily operating pack whenever the revenue agent has production work queued.",
+                        "Buy the follow-up template when approved outreach work is queued.",
                     },
                   },
                 },
@@ -936,26 +936,41 @@ export function agentStoreOpenApiDocument() {
           type: "object",
           required: [
             "id",
+            "slug",
             "sku",
             "name",
             "price",
+            "currency",
             "category",
+            "delivery_type",
+            "checkout_url",
+            "agent_details_url",
+            "refund_policy",
+            "tags",
+            "updated_at",
             "description",
-            "longDescription",
             "manifest",
           ],
           properties: {
             id: { type: "string" },
+            slug: { type: "string" },
             sku: { type: "string", enum: productSkus },
             name: { type: "string" },
             price: { type: "number" },
+            currency: { type: "string", enum: ["USD"] },
             category: { type: "string" },
+            delivery_type: { type: "string", enum: ["instant_digital_download"] },
+            checkout_url: { type: "string" },
+            agent_details_url: { type: "string" },
+            refund_policy: { type: "string" },
+            tags: { type: "array", items: { type: "string" } },
+            updated_at: { type: "string" },
             description: { type: "string" },
             longDescription: { type: "string" },
             icon: { type: "string" },
             useCase: { type: "string" },
             buyerSignal: { type: "string" },
-            revenueTier: { type: "string", enum: ["micro", "growth", "fleet"] },
+            deliverySummary: { type: "string" },
             manifest: { $ref: "#/components/schemas/ProductManifest" },
           },
         },

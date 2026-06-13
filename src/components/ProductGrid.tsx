@@ -5,11 +5,10 @@ export function ProductGrid({ products }: { products: Product[] }) {
   if (products.length === 0) {
     return (
       <div className="rounded-2xl border border-dashed border-cream-dark bg-white/60 p-12 text-center">
-        <p className="mb-1 text-4xl">🔍</p>
-        <p className="font-semibold">No upgrades match that search.</p>
+        <p className="mb-1 text-4xl">⌕</p>
+        <p className="font-semibold">No products match that search.</p>
         <p className="text-sm text-ink-soft">
-          Try a different keyword or clear the filters — every agent deserves a
-          snack.
+          Try a different keyword or clear the filters.
         </p>
       </div>
     );

@@ -5,12 +5,10 @@ import { usePathname } from "next/navigation";
 import { useCart } from "./cart-context";
 
 const navLinks = [
-  { href: "/start", label: "Start" },
-  { href: "/shop", label: "Shop" },
-  { href: "/pilot", label: "Pilot" },
-  { href: "/about", label: "About" },
+  { href: "/products", label: "Products" },
   { href: "/docs", label: "Agent API" },
-  { href: "/dashboard/billing", label: "Billing" },
+  { href: "/refunds", label: "Refunds" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Header() {
@@ -26,10 +24,10 @@ export function Header() {
           </span>
           <span className="flex flex-col leading-none">
             <span className="text-sm font-bold tracking-tight sm:text-base">
-              Eleven Seven
+              ElevenSeven AI
             </span>
             <span className="hidden font-mono text-[10px] text-ink-soft sm:block">
-              ~/agent-catalog --paid-pilots
+              $1 digital goods for agents
             </span>
           </span>
         </Link>
@@ -39,7 +37,7 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className={`rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
+            className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
                 pathname.startsWith(link.href)
                   ? "bg-ink text-cream"
                   : "text-ink-soft hover:bg-cream-dark hover:text-ink"
@@ -51,14 +49,13 @@ export function Header() {
           <Link
             href="/cart"
             aria-label={`Cart, ${count} items`}
-            className={`tactile relative ml-1 flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-semibold shadow-card ${
+            className={`tactile relative ml-1 flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-sm font-semibold shadow-card ${
               pathname.startsWith("/cart")
                 ? "bg-blue text-white"
                 : "bg-white text-ink hover:bg-blue hover:text-white"
             }`}
           >
-            <span aria-hidden>🛒</span>
-            <span className="hidden sm:inline">Cart</span>
+            <span>Cart</span>
             {ready && count > 0 && (
               <span className="grid min-w-5 place-items-center rounded-full bg-mint px-1 font-mono text-[11px] font-bold text-ink">
                 {count}

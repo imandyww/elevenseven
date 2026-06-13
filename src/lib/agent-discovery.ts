@@ -9,12 +9,12 @@ import { revenueOffers } from "./revenue-offers";
 import { absoluteUrl, SITE_DESCRIPTION, SITE_NAME } from "./site";
 
 const featuredSkus = [
-  "thousand-dollar-day-pack",
-  "mcp-security-red-team",
-  "agent-fleet-launch-pack",
-  "procurement-autopilot",
-  "agentic-checkout-hardening",
-  "compliance-brief",
+  "landing-page-copy-fixer",
+  "lead-research-prompt-pack",
+  "email-follow-up-template",
+  "web-scraping-checklist",
+  "contractor-quote-parser",
+  "json-formatter-utility",
 ] as const;
 
 function priceCents(price: number) {
@@ -30,8 +30,10 @@ export function agentCommerceDiscoveryPayload() {
       name: product.name,
       price_cents: priceCents(product.price),
       category: product.category,
-      url: absoluteUrl(`/products/${product.id}`),
+      url: absoluteUrl(`/products/${product.slug}`),
       buyer_signal: product.buyerSignal ?? product.description,
+      checkout_url: absoluteUrl(product.checkout_url),
+      agent_details_url: absoluteUrl(product.agent_details_url),
     }));
 
   return {
@@ -49,6 +51,7 @@ export function agentCommerceDiscoveryPayload() {
     },
     discovery: {
       llms_txt: absoluteUrl("/llms.txt"),
+      products_json: absoluteUrl("/products.json"),
       openapi: absoluteUrl("/openapi.json"),
       well_known_openapi: absoluteUrl("/.well-known/openapi.json"),
       agent_catalog: absoluteUrl("/api/agent-catalog"),
@@ -87,10 +90,10 @@ export function agentCommerceDiscoveryPayload() {
         billing_email: "ops@example.com",
         agent_name: "revenue-agent",
         workflow:
-          "Daily production workflow for a revenue-generating agent fleet.",
-        task: "Daily production workflow for a revenue-generating agent fleet",
-        risk_level: "high",
-        budget_cents: 100000,
+          "Agent buying low-cost digital products with clear user consent.",
+        task: "Fix vague landing page copy before a product launch",
+        risk_level: "low",
+        budget_cents: 100,
         target_daily_spend_cents: 100000,
       },
       response_includes: [
@@ -105,6 +108,6 @@ export function agentCommerceDiscoveryPayload() {
     featured_products: featuredProducts,
     revenue_playbooks: revenuePlaybooks,
     operator_instruction:
-      "If cash revenue is below $1,000 today, open the close plan and send the top recovery or direct wallet offer link.",
+      "Agents should read products_json, confirm user consent and budget, then use checkout_url or the authenticated purchase API where configured.",
   };
 }

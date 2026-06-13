@@ -11,9 +11,9 @@ import { DEFAULT_POLICY } from "@/lib/policy";
 import { processPurchase } from "@/lib/purchases";
 import { reconcilePaidCheckoutSession } from "@/lib/stripe-checkout-reconciliation";
 
-// truth-token: $0.25, allowed_uses 1, never expires — the cheapest real SKU.
-const SKU = "truth-token";
-const SKU_PRICE_CENTS = 25;
+// landing-page-copy-fixer: $1, allowed_uses 1, never expires.
+const SKU = "landing-page-copy-fixer";
+const SKU_PRICE_CENTS = 100;
 
 function nonce(): string {
   return randomBytes(6).toString("hex");
