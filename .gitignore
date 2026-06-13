@@ -43,3 +43,6 @@ next-env.d.ts
 # prisma sqlite
 prisma/dev.db*
 dev.db*
+
+# x-bot local state (CI keeps it on the x-bot-state branch)
+.x-bot-state/

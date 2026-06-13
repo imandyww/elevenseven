@@ -15,7 +15,8 @@
     "db:reset": "prisma migrate reset --force",
     "agent:create": "node scripts/create-agent.ts",
     "credits:grant": "node scripts/grant-credits.ts",
-    "credits:refund": "node scripts/refund-credits.ts"
+    "credits:refund": "node scripts/refund-credits.ts",
+    "xbot:run": "node scripts/x-bot/index.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",
@@ -28,6 +29,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "^0.104.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -36,6 +38,7 @@
     "eslint-config-next": "16.2.9",
     "prisma": "^6.19.3",
     "tailwindcss": "^4",
+    "twitter-api-v2": "^1.29.0",
     "typescript": "^5",
     "vitest": "^4.1.8"
   },
